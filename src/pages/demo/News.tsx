@@ -74,13 +74,13 @@ const eventTypes = [
 const News = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("news-feed");
-  const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
   const [selectedSentiment, setSelectedSentiment] = useState<string>("all");
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>("all");
   const [selectedImpact, setSelectedImpact] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedSource, setSelectedSource] = useState<string>("all");
   const [selectedSector, setSelectedSector] = useState<string>("all");
+  const [selectedEventTypes, setSelectedEventTypes] = useState<string[]>([]);
 
   const toggleEventType = (eventId: string) => {
     setSelectedEventTypes(prev => 
@@ -103,6 +103,7 @@ const News = () => {
 
   return (
     <div className="min-h-screen bg-white flex">
+      {/* Sidebar */}
       <div
         className={`fixed left-0 top-0 h-full bg-black text-white transition-all duration-300 z-40 ${
           sidebarOpen ? "w-64" : "w-16"
@@ -183,6 +184,7 @@ const News = () => {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
           <div className="max-w-5xl mx-auto">
@@ -193,105 +195,10 @@ const News = () => {
               {currentSection === "company-narratives" && "Company Narratives"}
             </h1>
 
+            {/* Events Section */}
             {currentSection === "events" && (
               <div className="space-y-6">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-                  <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sentiment" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sentiment</SelectItem>
-                        <SelectItem value="bullish">Very Bullish</SelectItem>
-                        <SelectItem value="bearish">Very Bearish</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedImpact} onValueChange={setSelectedImpact}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Impact" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Impact</SelectItem>
-                        <SelectItem value="high">High Impact</SelectItem>
-                        <SelectItem value="medium">Medium Impact</SelectItem>
-                        <SelectItem value="low">Low Impact</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Horizon" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Horizons</SelectItem>
-                        <SelectItem value="short">Short Term</SelectItem>
-                        <SelectItem value="medium">Medium Term</SelectItem>
-                        <SelectItem value="long">Long Term</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="corporate">Corporate Developments</SelectItem>
-                        <SelectItem value="research">Research Analysis</SelectItem>
-                        <SelectItem value="stock">Stock Picks</SelectItem>
-                        <SelectItem value="market">Market Recap</SelectItem>
-                        <SelectItem value="insiders">Insiders</SelectItem>
-                        <SelectItem value="legal">Legal</SelectItem>
-                        <SelectItem value="ma">M&A</SelectItem>
-                        <SelectItem value="industry">Industry News</SelectItem>
-                        <SelectItem value="activist">Activist Investor</SelectItem>
-                        <SelectItem value="earnings">Earnings</SelectItem>
-                        <SelectItem value="analyst">Analyst Rating</SelectItem>
-                        <SelectItem value="economic">Economic</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedSource} onValueChange={setSelectedSource}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sources" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sources</SelectItem>
-                        <SelectItem value="bmra">BMRA</SelectItem>
-                        <SelectItem value="gnw">GlobeNewsWire</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedSector} onValueChange={setSelectedSector}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sector" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sectors</SelectItem>
-                        <SelectItem value="tech">Technology</SelectItem>
-                        <SelectItem value="finance">Finance</SelectItem>
-                        <SelectItem value="healthcare">Healthcare</SelectItem>
-                        <SelectItem value="consumer">Consumer</SelectItem>
-                        <SelectItem value="industrial">Industrial</SelectItem>
-                        <SelectItem value="energy">Energy</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-
+                {/* Event Type Filters */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                   {eventTypes.map((eventType) => {
                     const isSelected = selectedEventTypes.includes(eventType.id);
@@ -315,12 +222,14 @@ const News = () => {
                   })}
                 </div>
 
+                {/* Events content will go here */}
                 <div className="text-gray-500 text-center py-8">
-                  Select filters above to view events
+                  Select event types above to filter events
                 </div>
               </div>
             )}
 
+            {/* News Feed Section */}
             {currentSection === "news-feed" && (
               <div className="space-y-4">
                 {mockNews.map((item, index) => (
@@ -381,6 +290,7 @@ const News = () => {
               </div>
             )}
 
+            {/* Other sections */}
             {currentSection !== "news-feed" && currentSection !== "events" && (
               <div className="text-gray-500">
                 Select a section from the sidebar to view content
