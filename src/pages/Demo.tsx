@@ -16,7 +16,7 @@ const Demo = () => {
     <div className="min-h-screen bg-white">
       <MainNav />
       <div className="p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h1 className="text-3xl font-bold">Tools</h1>
             <Link
@@ -27,15 +27,15 @@ const Demo = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {tools.map((tool) => (
               <Link
                 key={tool.name}
                 to={tool.path}
-                className="group aspect-square p-6 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg flex flex-col items-center justify-center text-center"
+                className="group aspect-square p-4 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg flex flex-col items-center justify-center text-center"
               >
-                <div className="p-4 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-3">
-                  <tool.icon className="w-8 h-8 text-primary" />
+                <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                  <tool.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h2 className="font-semibold text-sm">{tool.name}</h2>
               </Link>
