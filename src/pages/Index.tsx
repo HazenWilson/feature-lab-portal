@@ -1,14 +1,50 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Boxes } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const tabs = [
+    { name: "Features", path: "/" },
+    { name: "Demo", path: "/demo" },
+    { name: "Blog", path: "/blog" },
+    { name: "Legal", path: "/legal" },
+  ];
+
+  const isActive = (path: string) => {
+    if (path === "/" && currentPath === "/") return true;
+    if (path !== "/" && currentPath.startsWith(path)) return true;
+    return false;
+  };
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Tab Navigation */}
+      <nav className="border-b-2 border-black">
+        <div className="container mx-auto px-4">
+          <div className="flex gap-1">
+            {tabs.map((tab) => (
+              <Link
+                key={tab.name}
+                to={tab.path}
+                className={`px-6 py-4 text-sm font-medium transition-colors ${
+                  isActive(tab.path)
+                    ? "bg-black text-white"
+                    : "hover:bg-black/5"
+                }`}
+              >
+                {tab.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <div className="container px-4 py-16 mx-auto">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
@@ -50,7 +86,7 @@ const Index = () => {
             Everything You Need
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <div
                 key={feature.title}
                 className="relative group p-6 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg"
