@@ -10,6 +10,7 @@ const MainNav = () => {
   const tabs = [
     { name: "Features", path: "/" },
     { name: "Demo", path: "/demo" },
+    { name: "Pricing", path: "/pricing" },
     { name: "Blog", path: "/blog" },
     { name: "Legal", path: "/legal" },
   ];
