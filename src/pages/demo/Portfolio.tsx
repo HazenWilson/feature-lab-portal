@@ -13,62 +13,66 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+type TimeFrame = '24h' | '1w' | '1m' | '3m' | '1y' | 'ytd' | 'all';
+
 const mockData = {
-  chart: [
-    { date: "2024-01", value: 15000 },
-    { date: "2024-02", value: 18000 },
-    { date: "2024-03", value: 16500 },
-    { date: "2024-04", value: 21000 },
-    { date: "2024-05", value: 19500 },
-    { date: "2024-06", value: 23000 },
+  "24h": [
+    { date: "00:00", value: 22000 },
+    { date: "04:00", value: 22500 },
+    { date: "08:00", value: 22300 },
+    { date: "12:00", value: 22800 },
+    { date: "16:00", value: 23200 },
+    { date: "20:00", value: 23000 },
   ],
-  cash: {
-    total: 25000,
-    allocated: 15000,
-    available: 10000,
-  },
-  options: [
-    {
-      symbol: "GOEV2",
-      type: "$1 Call",
-      expiry: "1/15/2027",
-      quantity: "2 Buys",
-      value: 0.01,
-      change: 0.00,
-    },
+  "1w": [
+    { date: "Mon", value: 21000 },
+    { date: "Tue", value: 21500 },
+    { date: "Wed", value: 22000 },
+    { date: "Thu", value: 22500 },
+    { date: "Fri", value: 23000 },
   ],
-  crypto: [
-    {
-      symbol: "BTC",
-      quantity: 0.00159325,
-      value: 104298.82,
-      change: 2.93,
-    },
-    {
-      symbol: "AVAX",
-      quantity: 1.5147,
-      value: 41.33,
-      change: 1.55,
-    },
+  "1m": [
+    { date: "Week 1", value: 20000 },
+    { date: "Week 2", value: 21000 },
+    { date: "Week 3", value: 22000 },
+    { date: "Week 4", value: 23000 },
   ],
-  stocks: [
-    {
-      symbol: "MSTR",
-      shares: "35.20 Shares",
-      value: 398.55,
-      change: 8.60,
-    },
-    {
-      symbol: "TSLA",
-      shares: "0.600034 Shares",
-      value: 428.55,
-      change: 3.56,
-    },
+  "3m": [
+    { date: "Jan", value: 19000 },
+    { date: "Feb", value: 21000 },
+    { date: "Mar", value: 23000 },
   ],
+  "1y": [
+    { date: "2023 Q2", value: 15000 },
+    { date: "2023 Q3", value: 17000 },
+    { date: "2023 Q4", value: 20000 },
+    { date: "2024 Q1", value: 23000 },
+  ],
+  "ytd": [
+    { date: "Jan", value: 21000 },
+    { date: "Feb", value: 22000 },
+    { date: "Mar", value: 23000 },
+  ],
+  "all": [
+    { date: "2022", value: 10000 },
+    { date: "2023", value: 15000 },
+    { date: "2024", value: 23000 },
+  ],
+};
+
+const timeFrameLabels: Record<TimeFrame, string> = {
+  "24h": "24H",
+  "1w": "1W",
+  "1m": "1M",
+  "3m": "3M",
+  "1y": "1Y",
+  "ytd": "YTD",
+  "all": "ALL"
 };
 
 const Portfolio = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("1m");
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -135,9 +139,24 @@ const Portfolio = () => {
                   <div className="text-sm text-green-500">+$8,000.00 (53.33%)</div>
                 </div>
               </div>
+              
+              <div className="flex gap-2 mb-6">
+                {(Object.keys(timeFrameLabels) as TimeFrame[]).map((timeFrame) => (
+                  <Button
+                    key={timeFrame}
+                    variant={selectedTimeFrame === timeFrame ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedTimeFrame(timeFrame)}
+                    className="min-w-12"
+                  >
+                    {timeFrameLabels[timeFrame]}
+                  </Button>
+                ))}
+              </div>
+
               <div className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={mockData.chart}>
+                  <LineChart data={mockData[selectedTimeFrame]}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="date" />
                     <YAxis />
