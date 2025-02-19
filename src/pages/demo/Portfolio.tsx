@@ -1,5 +1,5 @@
 
-import { Search, DollarSign, Bot, Briefcase, ChartLineUp, Database, BarChart } from "lucide-react";
+import { Search, DollarSign, Bot, Briefcase, ChartLine, Database, BarChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
   LineChart,
