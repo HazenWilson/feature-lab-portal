@@ -104,7 +104,6 @@ const News = () => {
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Sidebar */}
       <div
         className={`fixed left-0 top-0 h-full bg-black text-white transition-all duration-300 z-40 ${
           sidebarOpen ? "w-64" : "w-16"
@@ -185,7 +184,6 @@ const News = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
           <div className="max-w-5xl mx-auto">
@@ -196,10 +194,8 @@ const News = () => {
               {currentSection === "company-narratives" && "Company Narratives"}
             </h1>
 
-            {/* Events Section */}
             {currentSection === "events" && (
               <div className="space-y-6">
-                {/* Event Type Filters */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                   {eventTypes.map((eventType) => {
                     const isSelected = selectedEventTypes.includes(eventType.id);
@@ -223,14 +219,97 @@ const News = () => {
                   })}
                 </div>
 
-                {/* Events content will go here */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                  <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Sentiment" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sentiment</SelectItem>
+                        <SelectItem value="bullish">Bullish</SelectItem>
+                        <SelectItem value="bearish">Bearish</SelectItem>
+                        <SelectItem value="neutral">Neutral</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Timeframe" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Timeframes</SelectItem>
+                        <SelectItem value="short">Short Term</SelectItem>
+                        <SelectItem value="medium">Medium Term</SelectItem>
+                        <SelectItem value="long">Long Term</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedImpact} onValueChange={setSelectedImpact}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Impact" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Impact</SelectItem>
+                        <SelectItem value="high">High Impact</SelectItem>
+                        <SelectItem value="medium">Medium Impact</SelectItem>
+                        <SelectItem value="low">Low Impact</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="housing">Housing</SelectItem>
+                        <SelectItem value="equity">Equity Indexes</SelectItem>
+                        <SelectItem value="commodities">Commodities</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedSource} onValueChange={setSelectedSource}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Source" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sources</SelectItem>
+                        <SelectItem value="benzinga">Benzinga</SelectItem>
+                        <SelectItem value="schwab">Schwab Network</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedSector} onValueChange={setSelectedSector}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Sector" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sectors</SelectItem>
+                        <SelectItem value="technology">Technology</SelectItem>
+                        <SelectItem value="finance">Finance</SelectItem>
+                        <SelectItem value="healthcare">Healthcare</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div className="text-gray-500 text-center py-8">
-                  Select event types above to filter events
+                  Select event types and filters above to view events
                 </div>
               </div>
             )}
 
-            {/* News Feed Section */}
             {currentSection === "news-feed" && (
               <div className="space-y-4">
                 {mockNews.map((item, index) => (
@@ -291,7 +370,6 @@ const News = () => {
               </div>
             )}
 
-            {/* Other sections */}
             {currentSection !== "news-feed" && currentSection !== "events" && (
               <div className="text-gray-500">
                 Select a section from the sidebar to view content
