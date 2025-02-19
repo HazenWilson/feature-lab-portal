@@ -1,5 +1,6 @@
 
 const YAHOO_FINANCE_API_BASE = "https://query2.finance.yahoo.com";
+const CORS_PROXY = "https://cors-proxy.fringe.zone";
 
 export interface YahooSearchResult {
   symbol: string;
@@ -15,7 +16,7 @@ export const searchSymbols = async (query: string): Promise<YahooSearchResult[]>
   
   try {
     const response = await fetch(
-      `${YAHOO_FINANCE_API_BASE}/v1/finance/search?q=${encodeURIComponent(query)}&quotesCount=6&newsCount=0&listsCount=0`
+      `${CORS_PROXY}/${YAHOO_FINANCE_API_BASE}/v1/finance/search?q=${encodeURIComponent(query)}&quotesCount=6&newsCount=0&listsCount=0`
     );
     
     if (!response.ok) {
