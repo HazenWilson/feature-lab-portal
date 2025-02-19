@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 import Legal from "./pages/Legal";
 import Pricing from "./pages/Pricing";
 import Portfolio from "./pages/demo/Portfolio";
+import InvestmentClub from "./pages/demo/InvestmentClub";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/demo/portfolio" element={<Portfolio />} />
+          <Route path="/demo/investment-club" element={<InvestmentClub />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/pricing" element={<Pricing />} />
