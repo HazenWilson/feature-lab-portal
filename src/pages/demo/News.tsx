@@ -52,6 +52,9 @@ const mockNews: NewsItem[] = [
 const News = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("news-feed");
+  const [selectedSentiment, setSelectedSentiment] = useState<string>("all");
+  const [selectedTimeframe, setSelectedTimeframe] = useState<string>("all");
+  const [selectedImpact, setSelectedImpact] = useState<string>("all");
 
   const getSentimentColor = (sentiment: NewsItem["sentiment"]) => {
     switch (sentiment) {
@@ -157,6 +160,117 @@ const News = () => {
               {currentSection === "stories" && "Stories"}
               {currentSection === "company-narratives" && "Company Narratives"}
             </h1>
+
+            {/* Filters Section */}
+            {currentSection === "news-feed" && (
+              <div className="mb-6 space-y-4">
+                <div className="flex flex-wrap gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Sentiment</label>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant={selectedSentiment === "all" ? "default" : "outline"}
+                        onClick={() => setSelectedSentiment("all")}
+                        size="sm"
+                      >
+                        All
+                      </Button>
+                      <Button 
+                        variant={selectedSentiment === "bullish" ? "default" : "outline"}
+                        onClick={() => setSelectedSentiment("bullish")}
+                        size="sm"
+                        className="text-green-500"
+                      >
+                        Bullish
+                      </Button>
+                      <Button 
+                        variant={selectedSentiment === "bearish" ? "default" : "outline"}
+                        onClick={() => setSelectedSentiment("bearish")}
+                        size="sm"
+                        className="text-red-500"
+                      >
+                        Bearish
+                      </Button>
+                      <Button 
+                        variant={selectedSentiment === "neutral" ? "default" : "outline"}
+                        onClick={() => setSelectedSentiment("neutral")}
+                        size="sm"
+                      >
+                        Neutral
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Timeframe</label>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant={selectedTimeframe === "all" ? "default" : "outline"}
+                        onClick={() => setSelectedTimeframe("all")}
+                        size="sm"
+                      >
+                        All
+                      </Button>
+                      <Button 
+                        variant={selectedTimeframe === "short" ? "default" : "outline"}
+                        onClick={() => setSelectedTimeframe("short")}
+                        size="sm"
+                      >
+                        Short Term
+                      </Button>
+                      <Button 
+                        variant={selectedTimeframe === "medium" ? "default" : "outline"}
+                        onClick={() => setSelectedTimeframe("medium")}
+                        size="sm"
+                      >
+                        Medium Term
+                      </Button>
+                      <Button 
+                        variant={selectedTimeframe === "long" ? "default" : "outline"}
+                        onClick={() => setSelectedTimeframe("long")}
+                        size="sm"
+                      >
+                        Long Term
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Impact</label>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant={selectedImpact === "all" ? "default" : "outline"}
+                        onClick={() => setSelectedImpact("all")}
+                        size="sm"
+                      >
+                        All
+                      </Button>
+                      <Button 
+                        variant={selectedImpact === "high" ? "default" : "outline"}
+                        onClick={() => setSelectedImpact("high")}
+                        size="sm"
+                      >
+                        High Impact
+                      </Button>
+                      <Button 
+                        variant={selectedImpact === "medium" ? "default" : "outline"}
+                        onClick={() => setSelectedImpact("medium")}
+                        size="sm"
+                      >
+                        Medium Impact
+                      </Button>
+                      <Button 
+                        variant={selectedImpact === "small" ? "default" : "outline"}
+                        onClick={() => setSelectedImpact("small")}
+                        size="sm"
+                      >
+                        Small Impact
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {currentSection === "news-feed" && (
               <div className="space-y-4">
