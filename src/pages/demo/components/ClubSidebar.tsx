@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Menu, PlayCircle, Briefcase, Users, FileText, Award, MessageSquare, ArrowLeft } from "lucide-react";
+import { Menu, PlayCircle, Briefcase, Users, FileText, Award, MessageSquare, ArrowLeft, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ClubSidebarProps {
@@ -70,6 +70,17 @@ export const ClubSidebar = ({
           >
             <Briefcase className="h-5 w-5" />
             {sidebarOpen && <span className="ml-2">Club Portfolio</span>}
+          </Button>
+
+          <Button
+            variant="ghost"
+            className={`text-white hover:bg-white/10 w-full justify-start ${
+              sidebarOpen ? "px-4" : "px-2"
+            }`}
+            onClick={() => setCurrentSection("trading-desk")}
+          >
+            <TrendingUp className="h-5 w-5" />
+            {sidebarOpen && <span className="ml-2">Trading Desk</span>}
           </Button>
 
           <Button
