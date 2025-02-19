@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Boxes, Users, DollarSign, Vote, BookOpen, Scale, Shield } from "lucide-react";
+import { ArrowRight, Boxes, Users, DollarSign, Vote, BookOpen, Scale, Shield, Newspaper, Bot, TrendingUp, TrendingDown, ListChecks, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainNav from "@/components/MainNav";
 
@@ -59,6 +58,44 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {clubFeatures.map((feature, index) => (
+              <div
+                key={feature.title}
+                className="p-6 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <feature.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-xl mb-2">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                    <ul className="mt-4 space-y-2">
+                      {feature.bullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* AI News Feed Section */}
+        <div className="mt-32 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">AI-Powered News Analysis</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Stay ahead of the market with our advanced AI news analysis system. Get real-time insights,
+              categorized updates, and intelligent market tracking.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {newsFeatures.map((feature) => (
               <div
                 key={feature.title}
                 className="p-6 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg"
@@ -153,6 +190,53 @@ const clubFeatures = [
       "Member contribution analysis",
       "Return on investment metrics",
       "Comparative benchmarks",
+    ],
+  },
+];
+
+const newsFeatures = [
+  {
+    title: "Comprehensive News Analysis",
+    description: "AI-powered analysis of news articles from multiple sources in real-time.",
+    icon: Bot,
+    bullets: [
+      "Automated news source tracking",
+      "Real-time article analysis",
+      "Event type categorization",
+      "News sentiment analysis",
+    ],
+  },
+  {
+    title: "Market Impact Tracking",
+    description: "Identify and track market impacts from news events.",
+    icon: BarChart,
+    bullets: [
+      "Bullish/bearish ticker identification",
+      "Sector impact analysis",
+      "Market sentiment tracking",
+      "Related stocks discovery",
+    ],
+  },
+  {
+    title: "Story Tracking",
+    description: "Follow developing stories and their market implications.",
+    icon: Newspaper,
+    bullets: [
+      "Related article grouping",
+      "Story timeline tracking",
+      "Impact progression analysis",
+      "Historical context integration",
+    ],
+  },
+  {
+    title: "Watchlist Management",
+    description: "Create and manage custom watchlists with AI-enhanced insights.",
+    icon: ListChecks,
+    bullets: [
+      "Custom watchlist creation",
+      "Automated news alerts",
+      "Sector-based monitoring",
+      "Price movement correlation",
     ],
   },
 ];
