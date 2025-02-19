@@ -1,10 +1,17 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, ArrowLeft, Rss, Calendar, BookOpen, FileText, Share2, BarChart2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type NewsItem = {
   source: {
@@ -55,6 +62,9 @@ const News = () => {
   const [selectedSentiment, setSelectedSentiment] = useState<string>("all");
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>("all");
   const [selectedImpact, setSelectedImpact] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedSource, setSelectedSource] = useState<string>("all");
+  const [selectedSector, setSelectedSector] = useState<string>("all");
 
   const getSentimentColor = (sentiment: NewsItem["sentiment"]) => {
     switch (sentiment) {
@@ -163,111 +173,96 @@ const News = () => {
 
             {/* Filters Section */}
             {currentSection === "news-feed" && (
-              <div className="mb-6 space-y-4">
+              <div className="mb-6">
                 <div className="flex flex-wrap gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Sentiment</label>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant={selectedSentiment === "all" ? "default" : "outline"}
-                        onClick={() => setSelectedSentiment("all")}
-                        size="sm"
-                      >
-                        All
-                      </Button>
-                      <Button 
-                        variant={selectedSentiment === "bullish" ? "default" : "outline"}
-                        onClick={() => setSelectedSentiment("bullish")}
-                        size="sm"
-                        className="text-green-500"
-                      >
-                        Bullish
-                      </Button>
-                      <Button 
-                        variant={selectedSentiment === "bearish" ? "default" : "outline"}
-                        onClick={() => setSelectedSentiment("bearish")}
-                        size="sm"
-                        className="text-red-500"
-                      >
-                        Bearish
-                      </Button>
-                      <Button 
-                        variant={selectedSentiment === "neutral" ? "default" : "outline"}
-                        onClick={() => setSelectedSentiment("neutral")}
-                        size="sm"
-                      >
-                        Neutral
-                      </Button>
-                    </div>
-                  </div>
+                  <Select onValueChange={setSelectedSentiment} value={selectedSentiment}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sentiment" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sentiment</SelectItem>
+                        <SelectItem value="very-bullish">Very Bullish</SelectItem>
+                        <SelectItem value="bullish">Bullish</SelectItem>
+                        <SelectItem value="neutral">Neutral</SelectItem>
+                        <SelectItem value="mixed">Mixed Sentiment</SelectItem>
+                        <SelectItem value="bearish">Bearish</SelectItem>
+                        <SelectItem value="very-bearish">Very Bearish</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Timeframe</label>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant={selectedTimeframe === "all" ? "default" : "outline"}
-                        onClick={() => setSelectedTimeframe("all")}
-                        size="sm"
-                      >
-                        All
-                      </Button>
-                      <Button 
-                        variant={selectedTimeframe === "short" ? "default" : "outline"}
-                        onClick={() => setSelectedTimeframe("short")}
-                        size="sm"
-                      >
-                        Short Term
-                      </Button>
-                      <Button 
-                        variant={selectedTimeframe === "medium" ? "default" : "outline"}
-                        onClick={() => setSelectedTimeframe("medium")}
-                        size="sm"
-                      >
-                        Medium Term
-                      </Button>
-                      <Button 
-                        variant={selectedTimeframe === "long" ? "default" : "outline"}
-                        onClick={() => setSelectedTimeframe("long")}
-                        size="sm"
-                      >
-                        Long Term
-                      </Button>
-                    </div>
-                  </div>
+                  <Select onValueChange={setSelectedImpact} value={selectedImpact}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Impact" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Impact</SelectItem>
+                        <SelectItem value="high">High Impact</SelectItem>
+                        <SelectItem value="medium">Medium Impact</SelectItem>
+                        <SelectItem value="small">Small Impact</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Impact</label>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant={selectedImpact === "all" ? "default" : "outline"}
-                        onClick={() => setSelectedImpact("all")}
-                        size="sm"
-                      >
-                        All
-                      </Button>
-                      <Button 
-                        variant={selectedImpact === "high" ? "default" : "outline"}
-                        onClick={() => setSelectedImpact("high")}
-                        size="sm"
-                      >
-                        High Impact
-                      </Button>
-                      <Button 
-                        variant={selectedImpact === "medium" ? "default" : "outline"}
-                        onClick={() => setSelectedImpact("medium")}
-                        size="sm"
-                      >
-                        Medium Impact
-                      </Button>
-                      <Button 
-                        variant={selectedImpact === "small" ? "default" : "outline"}
-                        onClick={() => setSelectedImpact("small")}
-                        size="sm"
-                      >
-                        Small Impact
-                      </Button>
-                    </div>
-                  </div>
+                  <Select onValueChange={setSelectedTimeframe} value={selectedTimeframe}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Horizon" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Horizons</SelectItem>
+                        <SelectItem value="short">Short Term</SelectItem>
+                        <SelectItem value="medium">Medium Term</SelectItem>
+                        <SelectItem value="long">Long Term</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select onValueChange={setSelectedCategory} value={selectedCategory}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="housing">Housing</SelectItem>
+                        <SelectItem value="equity">Equity Markets</SelectItem>
+                        <SelectItem value="forex">Forex</SelectItem>
+                        <SelectItem value="crypto">Crypto</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select onValueChange={setSelectedSource} value={selectedSource}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sources" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sources</SelectItem>
+                        <SelectItem value="benzinga">Benzinga</SelectItem>
+                        <SelectItem value="schwab">Schwab Network</SelectItem>
+                        <SelectItem value="reuters">Reuters</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Select onValueChange={setSelectedSector} value={selectedSector}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sector" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="all">All Sectors</SelectItem>
+                        <SelectItem value="technology">Technology</SelectItem>
+                        <SelectItem value="finance">Finance</SelectItem>
+                        <SelectItem value="healthcare">Healthcare</SelectItem>
+                        <SelectItem value="energy">Energy</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             )}
