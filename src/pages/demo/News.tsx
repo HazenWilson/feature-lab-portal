@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, ArrowLeft, Rss, Calendar, BookOpen, FileText, Share2, BarChart2, ExternalLink, Users, HandCoins, ArrowUp, ArrowDown, ChartBar, Check } from "lucide-react";
+import { Menu, ArrowLeft, Rss, Calendar, BookOpen, FileText, Share2, BarChart2, ExternalLink, Users, HandCoins, ArrowUp, ArrowDown, ChartBar, Check, AlertOctagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -68,7 +68,8 @@ const eventTypes = [
   { id: 'activist', name: 'Activist', icon: Users },
   { id: 'earnings', name: 'Earnings', icon: ChartBar },
   { id: 'stock-split', name: 'Stock Split', icon: ArrowUp },
-  { id: 'fda', name: 'FDA Approval', icon: Check }
+  { id: 'fda', name: 'FDA Approval', icon: Check },
+  { id: 'bankruptcy', name: 'Bankruptcy', icon: AlertOctagon }
 ];
 
 const News = () => {
