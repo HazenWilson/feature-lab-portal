@@ -162,14 +162,26 @@ const InvestmentClub = () => {
         }`}
       >
         <div className="p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-white/10 mb-6"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center gap-2 mb-6">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              asChild
+            >
+              <Link to="/demo" className="flex items-center gap-2">
+                <ArrowRight className="h-5 w-5" />
+                {sidebarOpen && "Back to Tools"}
+              </Link>
+            </Button>
+          </div>
 
           <div className="space-y-4">
             <Button
