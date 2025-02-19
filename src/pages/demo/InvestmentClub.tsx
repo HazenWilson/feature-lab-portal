@@ -162,7 +162,7 @@ const InvestmentClub = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex flex-col items-start gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-6">
             <Button
               variant="ghost"
               size="icon"
@@ -172,7 +172,7 @@ const InvestmentClub = () => {
               <Menu className="h-5 w-5" />
             </Button>
             {sidebarOpen && (
-              <span className="text-lg font-semibold ml-2">Nϵα</span>
+              <span className="text-lg font-semibold">Nϵα</span>
             )}
           </div>
 
