@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Boxes, Users, DollarSign, Vote, BookOpen, Scale, Shield, Newspaper, Bot, TrendingUp, TrendingDown, ListChecks, BarChart } from "lucide-react";
+import { ArrowRight, Boxes, DollarSign, Vote, Shield, Scale, Newspaper, Bot, BarChart, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainNav from "@/components/MainNav";
 
@@ -15,11 +16,11 @@ const Index = () => {
       <div className="container px-4 py-16 mx-auto">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-            Transform Your Investment Strategy
+            Welcome to Nϵα
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 mb-8 animate-slide-up">
-            Powerful tools for portfolio management, market analysis, and AI-driven insights.
-            Experience the future of investing today.
+            Transform your investment strategy with powerful tools for portfolio management, 
+            market analysis, and AI-driven insights. Experience the future of investing today.
           </p>
           <div className="flex items-center justify-center gap-4 mt-8">
             <Button
