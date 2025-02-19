@@ -69,11 +69,11 @@ const News = () => {
   const getSentimentColor = (sentiment: NewsItem["sentiment"]) => {
     switch (sentiment) {
       case "Bearish":
-        return "text-red-500";
+        return "bg-red-100 text-black";
       case "Bullish":
-        return "text-green-500";
+        return "bg-green-100 text-black";
       default:
-        return "text-gray-500";
+        return "bg-gray-100 text-black";
     }
   };
 
