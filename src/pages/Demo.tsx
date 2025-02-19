@@ -9,6 +9,7 @@ import {
   MessageSquare,
   Settings,
   ListChecks,
+  LineChart,
 } from "lucide-react";
 import MainNav from "@/components/MainNav";
 
@@ -77,6 +78,11 @@ const tools = [
     name: "Watch List",
     icon: ListChecks,
     path: "/demo/watch-list",
+  },
+  {
+    name: "Paper Trading",
+    icon: LineChart,
+    path: "/demo/paper-trading",
   },
   {
     name: "Settings",
