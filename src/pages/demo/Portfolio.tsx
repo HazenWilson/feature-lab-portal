@@ -186,37 +186,70 @@ const Portfolio = () => {
                   <div className="text-sm text-green-500">+$8,000.00 (53.33%)</div>
                 </div>
               </div>
-              
-              <div className="flex gap-2 mb-6">
-                {(Object.keys(timeFrameLabels) as TimeFrame[]).map((timeFrame) => (
-                  <Button
-                    key={timeFrame}
-                    variant={selectedTimeFrame === timeFrame ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedTimeFrame(timeFrame)}
-                    className="min-w-12"
-                  >
-                    {timeFrameLabels[timeFrame]}
-                  </Button>
-                ))}
-              </div>
 
-              <div className="h-[400px]">
+              <div className="h-[400px] mb-6">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData[selectedTimeFrame]}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
+                  <LineChart data={chartData[selectedTimeFrame]} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#34D399" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#34D399" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                    <XAxis 
+                      dataKey="date" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#666666', fontSize: 12 }}
+                    />
+                    <YAxis 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#666666', fontSize: 12 }}
+                      width={80}
+                      tickFormatter={(value) => `$${value.toLocaleString()}`}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white',
+                        border: '2px solid #f0f0f0',
+                        borderRadius: '8px',
+                        padding: '8px'
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="value"
+                      stroke="#34D399"
+                      strokeWidth={2}
+                      fillOpacity={1}
+                      fill="url(#colorValue)"
+                    />
                     <Line
                       type="monotone"
                       dataKey="value"
                       stroke="#34D399"
                       strokeWidth={2}
                       dot={false}
+                      activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
+              </div>
+
+              <div className="flex gap-2 justify-center">
+                {(Object.keys(timeFrameLabels) as TimeFrame[]).map((timeFrame) => (
+                  <Button
+                    key={timeFrame}
+                    variant={selectedTimeFrame === timeFrame ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedTimeFrame(timeFrame)}
+                    className="min-w-12 transition-all duration-200 hover:scale-105"
+                  >
+                    {timeFrameLabels[timeFrame]}
+                  </Button>
+                ))}
               </div>
             </Card>
           </div>
