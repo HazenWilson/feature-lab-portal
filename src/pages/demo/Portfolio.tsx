@@ -1,3 +1,4 @@
+
 import { Search, DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import {
 
 type TimeFrame = '24h' | '1w' | '1m' | '3m' | '1y' | 'ytd' | 'all';
 
-const mockData = {
+const chartData = {
   "24h": [
     { date: "00:00", value: 22000 },
     { date: "04:00", value: 22500 },
@@ -57,6 +58,52 @@ const mockData = {
     { date: "2022", value: 10000 },
     { date: "2023", value: 15000 },
     { date: "2024", value: 23000 },
+  ],
+};
+
+const mockData = {
+  cash: {
+    total: 25000,
+    allocated: 15000,
+    available: 10000,
+  },
+  options: [
+    {
+      symbol: "GOEV2",
+      type: "$1 Call",
+      expiry: "1/15/2027",
+      quantity: "2 Buys",
+      value: 0.01,
+      change: 0.00,
+    },
+  ],
+  crypto: [
+    {
+      symbol: "BTC",
+      quantity: 0.00159325,
+      value: 104298.82,
+      change: 2.93,
+    },
+    {
+      symbol: "AVAX",
+      quantity: 1.5147,
+      value: 41.33,
+      change: 1.55,
+    },
+  ],
+  stocks: [
+    {
+      symbol: "MSTR",
+      shares: "35.20 Shares",
+      value: 398.55,
+      change: 8.60,
+    },
+    {
+      symbol: "TSLA",
+      shares: "0.600034 Shares",
+      value: 428.55,
+      change: 3.56,
+    },
   ],
 };
 
@@ -156,7 +203,7 @@ const Portfolio = () => {
 
               <div className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={mockData[selectedTimeFrame]}>
+                  <LineChart data={chartData[selectedTimeFrame]}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="date" />
                     <YAxis />
