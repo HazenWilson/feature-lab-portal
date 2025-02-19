@@ -18,14 +18,8 @@ const Demo = () => {
       <MainNav />
       <div className="p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
+          <div className="mb-12">
             <h1 className="text-3xl font-bold">Tools</h1>
-            <Link
-              to="/"
-              className="text-primary hover:text-primary/80 transition-colors"
-            >
-              Back to Home
-            </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
