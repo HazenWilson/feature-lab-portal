@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ClubSidebar } from "./components/ClubSidebar";
@@ -177,6 +178,7 @@ const InvestmentClub = () => {
             setClubSelectorOpen={setClubSelectorOpen}
             setSelectedClub={setSelectedClub}
             clubs={mockClubs}
+            currentSection={currentSection}
           />
 
           <div className="max-w-5xl mx-auto">

@@ -30,11 +30,11 @@ export const PendingMembershipRequests = ({ pendingMembers }: PendingMembershipR
               <p className="text-sm text-gray-500">Requested {member.requestDate}</p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="text-green-600">
+              <Button variant="outline" className="text-green-600 hover:text-green-700">
                 <Check className="h-4 w-4 mr-1" />
                 Approve
               </Button>
-              <Button variant="outline" className="text-red-600">
+              <Button variant="outline" className="text-red-600 hover:bg-red-50 hover:text-red-700">
                 <X className="h-4 w-4 mr-1" />
                 Reject
               </Button>

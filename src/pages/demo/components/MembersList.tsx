@@ -1,6 +1,5 @@
 
-import { Users, UserPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -34,10 +33,6 @@ export const MembersList = ({ members }: MembersListProps) => {
           <Users className="h-5 w-5" />
           <h2 className="text-lg font-semibold">Club Members</h2>
         </div>
-        <Button>
-          <UserPlus className="h-4 w-4 mr-2" />
-          Invite Member
-        </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

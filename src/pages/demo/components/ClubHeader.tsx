@@ -1,5 +1,5 @@
 
-import { ChevronDown, PlusCircle } from "lucide-react";
+import { ChevronDown, PlusCircle, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -14,6 +14,7 @@ interface ClubHeaderProps {
   setClubSelectorOpen: (open: boolean) => void;
   setSelectedClub: (club: Club) => void;
   clubs: Club[];
+  currentSection: string;
 }
 
 export const ClubHeader = ({
@@ -22,7 +23,41 @@ export const ClubHeader = ({
   setClubSelectorOpen,
   setSelectedClub,
   clubs,
+  currentSection,
 }: ClubHeaderProps) => {
+  const renderActionButtons = () => {
+    switch (currentSection) {
+      case "getting-started":
+        return (
+          <>
+            <Button variant="outline">
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Join Club
+            </Button>
+            <Button>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Start New Club
+            </Button>
+          </>
+        );
+      case "members":
+        return (
+          <>
+            <Button variant="outline">
+              <UserPlus className="h-4 w-4 mr-2" />
+              Onboard Members
+            </Button>
+            <Button>
+              <UserPlus className="h-4 w-4 mr-2" />
+              Invite Member
+            </Button>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto mb-8">
       <div className="flex items-center justify-between">
@@ -54,14 +89,7 @@ export const ClubHeader = ({
           )}
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">
-            <PlusCircle className="h-4 w-4 mr-2" />
-            Join Club
-          </Button>
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2" />
-            Start New Club
-          </Button>
+          {renderActionButtons()}
         </div>
       </div>
     </div>
