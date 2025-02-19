@@ -72,6 +72,22 @@ const eventTypes = [
   { id: 'bankruptcy', name: 'Bankruptcy', icon: AlertOctagon }
 ];
 
+const categoryOptions = [
+  { id: 'corporate', name: 'Corporate Developments' },
+  { id: 'research', name: 'Research Analysis' },
+  { id: 'stock-picks', name: 'Stock Picks' },
+  { id: 'market-recap', name: 'Market Recap' },
+  { id: 'insiders', name: 'Insiders' },
+  { id: 'legal', name: 'Legal' },
+  { id: 'ma', name: 'M&A' },
+  { id: 'industry', name: 'Industry News' },
+  { id: 'activist', name: 'Activist Investor' },
+  { id: 'earnings', name: 'Earnings' },
+  { id: 'analyst', name: 'Analyst Rating' },
+  { id: 'economic', name: 'Economic' },
+  { id: 'other', name: 'Other' }
+];
+
 const News = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("news-feed");
@@ -195,9 +211,9 @@ const News = () => {
             </h1>
 
             {(currentSection === "events" || currentSection === "news-feed") && (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mb-6">
+              <div className="flex flex-wrap gap-2 mb-6">
                 <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
                     <SelectValue placeholder="Sentiment" />
                   </SelectTrigger>
                   <SelectContent>
@@ -210,22 +226,8 @@ const News = () => {
                   </SelectContent>
                 </Select>
 
-                <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Timeframe" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Timeframes</SelectItem>
-                      <SelectItem value="short">Short Term</SelectItem>
-                      <SelectItem value="medium">Medium Term</SelectItem>
-                      <SelectItem value="long">Long Term</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
                 <Select value={selectedImpact} onValueChange={setSelectedImpact}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
                     <SelectValue placeholder="Impact" />
                   </SelectTrigger>
                   <SelectContent>
@@ -238,35 +240,53 @@ const News = () => {
                   </SelectContent>
                 </Select>
 
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Category" />
+                <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
+                    <SelectValue placeholder="Horizon" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      <SelectItem value="housing">Housing</SelectItem>
-                      <SelectItem value="equity">Equity Indexes</SelectItem>
-                      <SelectItem value="commodities">Commodities</SelectItem>
+                      <SelectItem value="all">All Timeframes</SelectItem>
+                      <SelectItem value="short">Short Term</SelectItem>
+                      <SelectItem value="medium">Medium Term</SelectItem>
+                      <SelectItem value="long">Long Term</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[300px]">
+                    <SelectGroup>
+                      {categoryOptions.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
 
                 <Select value={selectedSource} onValueChange={setSelectedSource}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Source" />
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
+                    <SelectValue placeholder="Sources" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="all">All Sources</SelectItem>
-                      <SelectItem value="benzinga">Benzinga</SelectItem>
-                      <SelectItem value="schwab">Schwab Network</SelectItem>
+                      <SelectItem value="bloomberg">Bloomberg</SelectItem>
+                      <SelectItem value="reuters">Reuters</SelectItem>
+                      <SelectItem value="cnbc">CNBC</SelectItem>
+                      <SelectItem value="wsj">Wall Street Journal</SelectItem>
+                      <SelectItem value="ft">Financial Times</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
 
                 <Select value={selectedSector} onValueChange={setSelectedSector}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-[140px] border-2 bg-white">
                     <SelectValue placeholder="Sector" />
                   </SelectTrigger>
                   <SelectContent>
@@ -275,6 +295,9 @@ const News = () => {
                       <SelectItem value="technology">Technology</SelectItem>
                       <SelectItem value="finance">Finance</SelectItem>
                       <SelectItem value="healthcare">Healthcare</SelectItem>
+                      <SelectItem value="consumer">Consumer</SelectItem>
+                      <SelectItem value="energy">Energy</SelectItem>
+                      <SelectItem value="materials">Materials</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
