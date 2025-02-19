@@ -5,6 +5,7 @@ import { ClubSidebar } from "./components/ClubSidebar";
 import { ClubHeader } from "./components/ClubHeader";
 import { PendingMembershipRequests } from "./components/PendingMembershipRequests";
 import { MembersList } from "./components/MembersList";
+import { OwnershipDistribution } from "./components/OwnershipDistribution";
 
 const mockClubs = [
   { id: 1, name: "Tech Investors Club" },
@@ -36,6 +37,7 @@ const InvestmentClub = () => {
           <div className="space-y-6">
             <PendingMembershipRequests pendingMembers={mockPendingMembers} />
             <MembersList members={mockMembers} />
+            <OwnershipDistribution members={mockMembers} />
           </div>
         );
       case "getting-started":
