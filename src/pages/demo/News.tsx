@@ -194,6 +194,93 @@ const News = () => {
               {currentSection === "company-narratives" && "Company Narratives"}
             </h1>
 
+            {(currentSection === "events" || currentSection === "news-feed") && (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mb-6">
+                <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sentiment" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Sentiment</SelectItem>
+                      <SelectItem value="bullish">Bullish</SelectItem>
+                      <SelectItem value="bearish">Bearish</SelectItem>
+                      <SelectItem value="neutral">Neutral</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Timeframe" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Timeframes</SelectItem>
+                      <SelectItem value="short">Short Term</SelectItem>
+                      <SelectItem value="medium">Medium Term</SelectItem>
+                      <SelectItem value="long">Long Term</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedImpact} onValueChange={setSelectedImpact}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Impact" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Impact</SelectItem>
+                      <SelectItem value="high">High Impact</SelectItem>
+                      <SelectItem value="medium">Medium Impact</SelectItem>
+                      <SelectItem value="low">Low Impact</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Categories</SelectItem>
+                      <SelectItem value="housing">Housing</SelectItem>
+                      <SelectItem value="equity">Equity Indexes</SelectItem>
+                      <SelectItem value="commodities">Commodities</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedSource} onValueChange={setSelectedSource}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Source" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Sources</SelectItem>
+                      <SelectItem value="benzinga">Benzinga</SelectItem>
+                      <SelectItem value="schwab">Schwab Network</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedSector} onValueChange={setSelectedSector}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sector" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">All Sectors</SelectItem>
+                      <SelectItem value="technology">Technology</SelectItem>
+                      <SelectItem value="finance">Finance</SelectItem>
+                      <SelectItem value="healthcare">Healthcare</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             {currentSection === "events" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
@@ -217,91 +304,6 @@ const News = () => {
                       </Card>
                     );
                   })}
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-                  <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sentiment" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sentiment</SelectItem>
-                        <SelectItem value="bullish">Bullish</SelectItem>
-                        <SelectItem value="bearish">Bearish</SelectItem>
-                        <SelectItem value="neutral">Neutral</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Timeframe" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Timeframes</SelectItem>
-                        <SelectItem value="short">Short Term</SelectItem>
-                        <SelectItem value="medium">Medium Term</SelectItem>
-                        <SelectItem value="long">Long Term</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedImpact} onValueChange={setSelectedImpact}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Impact" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Impact</SelectItem>
-                        <SelectItem value="high">High Impact</SelectItem>
-                        <SelectItem value="medium">Medium Impact</SelectItem>
-                        <SelectItem value="low">Low Impact</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="housing">Housing</SelectItem>
-                        <SelectItem value="equity">Equity Indexes</SelectItem>
-                        <SelectItem value="commodities">Commodities</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedSource} onValueChange={setSelectedSource}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Source" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sources</SelectItem>
-                        <SelectItem value="benzinga">Benzinga</SelectItem>
-                        <SelectItem value="schwab">Schwab Network</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={selectedSector} onValueChange={setSelectedSector}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sector" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="all">All Sectors</SelectItem>
-                        <SelectItem value="technology">Technology</SelectItem>
-                        <SelectItem value="finance">Finance</SelectItem>
-                        <SelectItem value="healthcare">Healthcare</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                 </div>
 
                 <div className="text-gray-500 text-center py-8">
