@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Boxes } from "lucide-react";
+import { ArrowRight, Boxes, Users, DollarSign, Vote, BookOpen, Scale, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainNav from "@/components/MainNav";
 
@@ -46,6 +47,44 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Investment Club Feature Section */}
+        <div className="mt-32 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">Investment Club Management</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Streamline your investment club operations with powerful tools designed for 
+              collaboration, transparency, and efficient decision-making.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {clubFeatures.map((feature, index) => (
+              <div
+                key={feature.title}
+                className="p-6 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-lg"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-lg bg-primary/10">
+                    <feature.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-xl mb-2">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                    <ul className="mt-4 space-y-2">
+                      {feature.bullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Features Preview */}
         <div className="mt-32 animate-fade-in">
           <h2 className="text-3xl font-bold text-center mb-16">
@@ -70,6 +109,53 @@ const Index = () => {
     </div>
   );
 };
+
+const clubFeatures = [
+  {
+    title: "Equity Management",
+    description: "Automated tracking and management of member equity positions with real-time updates.",
+    icon: DollarSign,
+    bullets: [
+      "Automatic member equity tracking",
+      "Pro rata calculations",
+      "Individual return management",
+      "Hybrid return structures",
+    ],
+  },
+  {
+    title: "Democratic Governance",
+    description: "Streamlined voting system for club decisions and rule changes.",
+    icon: Vote,
+    bullets: [
+      "Club elections management",
+      "Proposal creation and voting",
+      "Rule amendment system",
+      "Voting history tracking",
+    ],
+  },
+  {
+    title: "Compliance & Documentation",
+    description: "Comprehensive tools for maintaining club records and ensuring compliance.",
+    icon: Shield,
+    bullets: [
+      "Operating agreement templates",
+      "Regulatory compliance checks",
+      "Document storage",
+      "Audit trail maintenance",
+    ],
+  },
+  {
+    title: "Performance Analytics",
+    description: "Detailed insights into club and individual member performance.",
+    icon: Scale,
+    bullets: [
+      "Portfolio performance tracking",
+      "Member contribution analysis",
+      "Return on investment metrics",
+      "Comparative benchmarks",
+    ],
+  },
+];
 
 const features = [
   {
