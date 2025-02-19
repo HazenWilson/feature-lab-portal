@@ -8,6 +8,7 @@ import {
   BookOpen,
   MessageSquare,
   Settings,
+  ListChecks,
 } from "lucide-react";
 import MainNav from "@/components/MainNav";
 
@@ -77,6 +78,11 @@ const tools = [
     name: "AI Chat",
     icon: MessageSquare,
     path: "/demo/ai-chat",
+  },
+  {
+    name: "Watch List",
+    icon: ListChecks,
+    path: "/demo/watch-list",
   },
   {
     name: "Settings",
