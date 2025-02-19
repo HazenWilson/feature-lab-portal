@@ -12,6 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Area
 } from "recharts";
 
 type TimeFrame = '24h' | '1w' | '1m' | '3m' | '1y' | 'ytd' | 'all';
