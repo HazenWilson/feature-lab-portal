@@ -45,6 +45,15 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  /* Make all form elements and select triggers have bold borders */
+  select,
+  input,
+  textarea,
+  [role="combobox"],
+  .select-trigger {
+    @apply border-2 !important;
+  }
 }
 
 /* Smooth scrolling and transitions */
