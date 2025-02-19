@@ -1,31 +1,9 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, ArrowLeft, Rss, Calendar, BookOpen, FileText, Share2, BarChart2, ExternalLink, Users, HandCoins, ArrowUp, ArrowDown, ChartBar, Check, AlertOctagon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-type NewsItem = {
-  source: {
-    name: string;
-    icon: string;
-  };
-  sentiment: "Bearish" | "Bullish" | "Neutral";
-  timeframe: "Short Term" | "Medium Term" | "Long Term";
-  impact: "Small Impact" | "Medium Impact" | "High Impact";
-  category: string;
-  title: string;
-  summary: string;
-  timeAgo: string;
-};
+import { useState } from "react";
+import { NewsSidebar } from "./components/NewsSidebar";
+import { NewsFilters } from "./components/NewsFilters";
+import { EventTypeCards } from "./components/EventTypeCards";
+import { NewsCard, type NewsItem } from "./components/NewsCard";
 
 const mockNews: NewsItem[] = [
   {
@@ -56,38 +34,6 @@ const mockNews: NewsItem[] = [
   },
 ];
 
-const eventTypes = [
-  { id: 'ma', name: 'M&A', icon: Users },
-  { id: 'mass-contract', name: 'Mass Contract', icon: FileText },
-  { id: 'short-seller', name: 'Short Seller', icon: ArrowDown },
-  { id: 'lawsuit', name: 'Law Suit', icon: FileText },
-  { id: 'buyback', name: 'Shares Buyback', icon: HandCoins },
-  { id: 'dividend', name: 'Dividend Change', icon: ArrowUp },
-  { id: 'layoff', name: 'Layoff', icon: Users },
-  { id: 'leadership', name: 'Leadership Change', icon: Users },
-  { id: 'activist', name: 'Activist', icon: Users },
-  { id: 'earnings', name: 'Earnings', icon: ChartBar },
-  { id: 'stock-split', name: 'Stock Split', icon: ArrowUp },
-  { id: 'fda', name: 'FDA Approval', icon: Check },
-  { id: 'bankruptcy', name: 'Bankruptcy', icon: AlertOctagon }
-];
-
-const categoryOptions = [
-  { id: 'corporate', name: 'Corporate Developments' },
-  { id: 'research', name: 'Research Analysis' },
-  { id: 'stock-picks', name: 'Stock Picks' },
-  { id: 'market-recap', name: 'Market Recap' },
-  { id: 'insiders', name: 'Insiders' },
-  { id: 'legal', name: 'Legal' },
-  { id: 'ma', name: 'M&A' },
-  { id: 'industry', name: 'Industry News' },
-  { id: 'activist', name: 'Activist Investor' },
-  { id: 'earnings', name: 'Earnings' },
-  { id: 'analyst', name: 'Analyst Rating' },
-  { id: 'economic', name: 'Economic' },
-  { id: 'other', name: 'Other' }
-];
-
 const News = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("news-feed");
@@ -107,98 +53,14 @@ const News = () => {
     );
   };
 
-  const getSentimentColor = (sentiment: NewsItem["sentiment"]) => {
-    switch (sentiment) {
-      case "Bearish":
-        return "bg-red-100 text-black";
-      case "Bullish":
-        return "bg-green-100 text-black";
-      default:
-        return "bg-gray-100 text-black";
-    }
-  };
-
   return (
     <div className="min-h-screen bg-white flex">
-      <div
-        className={`fixed left-0 top-0 h-full bg-black text-white transition-all duration-300 z-40 ${
-          sidebarOpen ? "w-64" : "w-16"
-        }`}
-      >
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:bg-white/10"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-            {sidebarOpen && (
-              <span className="text-lg font-semibold">Nϵα</span>
-            )}
-          </div>
-
-          <div className="space-y-4">
-            <Link to="/demo">
-              <Button
-                variant="ghost"
-                className={`text-white hover:bg-white/10 w-full justify-start ${
-                  sidebarOpen ? "px-4" : "px-2"
-                }`}
-              >
-                <ArrowLeft className="h-5 w-5" />
-                {sidebarOpen && <span className="ml-2">Back to Tools</span>}
-              </Button>
-            </Link>
-
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-              onClick={() => setCurrentSection("news-feed")}
-            >
-              <Rss className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">News Feed</span>}
-            </Button>
-
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-              onClick={() => setCurrentSection("events")}
-            >
-              <Calendar className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Events</span>}
-            </Button>
-
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-              onClick={() => setCurrentSection("stories")}
-            >
-              <BookOpen className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Stories</span>}
-            </Button>
-
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-              onClick={() => setCurrentSection("company-narratives")}
-            >
-              <FileText className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Company Narratives</span>}
-            </Button>
-          </div>
-        </div>
-      </div>
+      <NewsSidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        currentSection={currentSection}
+        setCurrentSection={setCurrentSection}
+      />
 
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
@@ -211,124 +73,29 @@ const News = () => {
             </h1>
 
             {(currentSection === "events" || currentSection === "news-feed") && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                <Select value={selectedSentiment} onValueChange={setSelectedSentiment}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Sentiment" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Sentiment</SelectItem>
-                      <SelectItem value="bullish">Bullish</SelectItem>
-                      <SelectItem value="bearish">Bearish</SelectItem>
-                      <SelectItem value="neutral">Neutral</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedImpact} onValueChange={setSelectedImpact}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Impact" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Impact</SelectItem>
-                      <SelectItem value="high">High Impact</SelectItem>
-                      <SelectItem value="medium">Medium Impact</SelectItem>
-                      <SelectItem value="low">Low Impact</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Horizon" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Timeframes</SelectItem>
-                      <SelectItem value="short">Short Term</SelectItem>
-                      <SelectItem value="medium">Medium Term</SelectItem>
-                      <SelectItem value="long">Long Term</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-[300px]">
-                    <SelectGroup>
-                      {categoryOptions.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedSource} onValueChange={setSelectedSource}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Sources" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Sources</SelectItem>
-                      <SelectItem value="bloomberg">Bloomberg</SelectItem>
-                      <SelectItem value="reuters">Reuters</SelectItem>
-                      <SelectItem value="cnbc">CNBC</SelectItem>
-                      <SelectItem value="wsj">Wall Street Journal</SelectItem>
-                      <SelectItem value="ft">Financial Times</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedSector} onValueChange={setSelectedSector}>
-                  <SelectTrigger className="w-[140px] border-2 bg-white">
-                    <SelectValue placeholder="Sector" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="all">All Sectors</SelectItem>
-                      <SelectItem value="technology">Technology</SelectItem>
-                      <SelectItem value="finance">Finance</SelectItem>
-                      <SelectItem value="healthcare">Healthcare</SelectItem>
-                      <SelectItem value="consumer">Consumer</SelectItem>
-                      <SelectItem value="energy">Energy</SelectItem>
-                      <SelectItem value="materials">Materials</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+              <NewsFilters
+                selectedSentiment={selectedSentiment}
+                setSelectedSentiment={setSelectedSentiment}
+                selectedTimeframe={selectedTimeframe}
+                setSelectedTimeframe={setSelectedTimeframe}
+                selectedImpact={selectedImpact}
+                setSelectedImpact={setSelectedImpact}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                selectedSource={selectedSource}
+                setSelectedSource={setSelectedSource}
+                selectedSector={selectedSector}
+                setSelectedSector={setSelectedSector}
+              />
             )}
 
             {currentSection === "events" && (
               <div className="space-y-6">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                  {eventTypes.map((eventType) => {
-                    const isSelected = selectedEventTypes.includes(eventType.id);
-                    const Icon = eventType.icon;
-                    return (
-                      <Card 
-                        key={eventType.id}
-                        className={`cursor-pointer transition-all hover:shadow-md ${
-                          isSelected ? 'border-primary bg-primary/10' : 'bg-white'
-                        }`}
-                        onClick={() => toggleEventType(eventType.id)}
-                      >
-                        <CardContent className="p-3 flex flex-col items-center justify-center text-center">
-                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary/20' : 'bg-gray-100'} mb-2`}>
-                            <Icon className={`w-4 h-4 ${isSelected ? 'text-primary' : 'text-gray-600'}`} />
-                          </div>
-                          <span className="text-xs font-medium">{eventType.name}</span>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
-
+                <EventTypeCards
+                  selectedEventTypes={selectedEventTypes}
+                  toggleEventType={toggleEventType}
+                />
+                
                 <div className="text-gray-500 text-center py-8">
                   Select event types and filters above to view events
                 </div>
@@ -338,59 +105,7 @@ const News = () => {
             {currentSection === "news-feed" && (
               <div className="space-y-4">
                 {mockNews.map((item, index) => (
-                  <Card key={index} className="overflow-hidden">
-                    <CardContent className="p-6">
-                      <div className="flex flex-col space-y-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-green-600 font-semibold">
-                            {item.source.icon}
-                          </div>
-                          <span className="font-medium">{item.source.name}</span>
-                          <Badge className={`${getSentimentColor(item.sentiment)}`}>
-                            {item.sentiment}
-                          </Badge>
-                          <Badge variant="secondary" className="bg-orange-100">
-                            {item.timeframe}
-                          </Badge>
-                          <Badge variant="secondary" className="bg-gray-100">
-                            {item.impact}
-                          </Badge>
-                        </div>
-                        
-                        <div className="text-gray-600 text-sm">
-                          {item.category}
-                        </div>
-
-                        <h2 className="text-xl font-bold">
-                          {item.title}
-                        </h2>
-
-                        <p className="text-gray-600">
-                          {item.summary}
-                        </p>
-
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center space-x-2 text-gray-500">
-                            <span>{item.timeAgo} saved</span>
-                          </div>
-                          <div className="flex items-center space-x-4">
-                            <Button variant="ghost" size="sm">
-                              <Share2 className="h-4 w-4 mr-2" />
-                              Share
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <BarChart2 className="h-4 w-4 mr-2" />
-                              Breakdown
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <ExternalLink className="h-4 w-4 mr-2" />
-                              Full Article
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <NewsCard key={index} item={item} />
                 ))}
               </div>
             )}
