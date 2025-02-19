@@ -12,6 +12,7 @@ import {
   ChevronDown,
   PlusCircle,
   ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -162,28 +163,28 @@ const InvestmentClub = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:bg-white/10"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-              asChild
-            >
-              <Link to="/demo" className="flex items-center gap-2">
-                <ArrowRight className="h-5 w-5" />
-                {sidebarOpen && "Back to Tools"}
-              </Link>
-            </Button>
-          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/10 mb-6"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
 
           <div className="space-y-4">
+            <Link to="/demo">
+              <Button
+                variant="ghost"
+                className={`text-white hover:bg-white/10 w-full justify-start ${
+                  sidebarOpen ? "px-4" : "px-2"
+                }`}
+              >
+                <ArrowLeft className="h-5 w-5" />
+                {sidebarOpen && <span className="ml-2">Back to Tools</span>}
+              </Button>
+            </Link>
+
             <Button
               variant="ghost"
               className={`text-white hover:bg-white/10 w-full justify-start ${
