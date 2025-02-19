@@ -1,49 +1,15 @@
-
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowRight, Boxes } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import MainNav from "@/components/MainNav";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  const tabs = [
-    { name: "Features", path: "/" },
-    { name: "Demo", path: "/demo" },
-    { name: "Blog", path: "/blog" },
-    { name: "Legal", path: "/legal" },
-  ];
-
-  const isActive = (path: string) => {
-    if (path === "/" && currentPath === "/") return true;
-    if (path !== "/" && currentPath.startsWith(path)) return true;
-    return false;
-  };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Tab Navigation */}
-      <nav className="border-b-2 border-black">
-        <div className="container mx-auto px-4">
-          <div className="flex gap-1">
-            {tabs.map((tab) => (
-              <Link
-                key={tab.name}
-                to={tab.path}
-                className={`px-6 py-4 text-sm font-medium transition-colors ${
-                  isActive(tab.path)
-                    ? "bg-black text-white"
-                    : "hover:bg-black/5"
-                }`}
-              >
-                {tab.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+      <MainNav />
 
       {/* Hero Section */}
       <div className="container px-4 py-16 mx-auto">
