@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import { searchSymbols, type YahooSearchResult } from "@/utils/yahooFinance";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -200,29 +200,31 @@ const TradeDesk = () => {
                       onValueChange={setSearchQuery}
                       className="h-9"
                     />
-                    <CommandGroup>
+                    <CommandList>
                       {searchResults.length === 0 && searchQuery && (
                         <CommandEmpty>No results found.</CommandEmpty>
                       )}
-                      {searchResults.map((result) => (
-                        <CommandItem
-                          key={result.symbol}
-                          value={result.symbol}
-                          onSelect={() => {
-                            setSelectedSymbol(result.symbol);
-                            setSelectedCompanyName(result.name);
-                            setOpen(false);
-                          }}
-                        >
-                          <div className="flex flex-col">
-                            <span>{result.symbol}</span>
-                            <span className="text-sm text-muted-foreground">
-                              {result.name}
-                            </span>
-                          </div>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
+                      <CommandGroup>
+                        {searchResults.map((result) => (
+                          <CommandItem
+                            key={result.symbol}
+                            value={result.symbol}
+                            onSelect={() => {
+                              setSelectedSymbol(result.symbol);
+                              setSelectedCompanyName(result.name);
+                              setOpen(false);
+                            }}
+                          >
+                            <div className="flex flex-col">
+                              <span>{result.symbol}</span>
+                              <span className="text-sm text-muted-foreground">
+                                {result.name}
+                              </span>
+                            </div>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
                   </Command>
                 </PopoverContent>
               </Popover>
