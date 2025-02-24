@@ -226,13 +226,13 @@ const TradeDesk = () => {
                 <Button 
                   className="flex-1 text-lg py-6 bg-green-600 hover:bg-green-700"
                 >
-                  Buy {searchQuery}
+                  Buy {selectedSymbol}
                 </Button>
                 <Button 
                   variant="outline" 
                   className="flex-1 text-lg py-6"
                 >
-                  Sell {searchQuery}
+                  Sell {selectedSymbol}
                 </Button>
               </div>
 
@@ -293,7 +293,7 @@ const TradeDesk = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-2">Trade Options</h3>
-                <p>View and trade options contracts for {searchQuery}</p>
+                <p>View and trade options contracts for {selectedSymbol}</p>
                 <Button variant="outline" className="w-full mt-4">
                   View Options Chain
                 </Button>
