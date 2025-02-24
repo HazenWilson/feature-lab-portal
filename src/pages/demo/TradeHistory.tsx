@@ -69,7 +69,7 @@ const TradeHistory = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-8">
+          <div className="flex items-center gap-2 mb-12">
             <Button
               variant="ghost"
               size="icon"
@@ -83,7 +83,7 @@ const TradeHistory = () => {
             )}
           </div>
 
-          <nav className="space-y-8">
+          <nav className="space-y-12">
             <Link to="/demo">
               <Button
                 variant="ghost"
