@@ -153,25 +153,29 @@ const Portfolio = () => {
               </Button>
             </Link>
 
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start bg-white/10 ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-            >
-              <Briefcase className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Dashboard</span>}
-            </Button>
+            <Link to="/demo/portfolio">
+              <Button
+                variant="ghost"
+                className={`text-white hover:bg-white/10 w-full justify-start bg-white/10 ${
+                  sidebarOpen ? "px-4" : "px-2"
+                }`}
+              >
+                <Briefcase className="h-5 w-5" />
+                {sidebarOpen && <span className="ml-2">Dashboard</span>}
+              </Button>
+            </Link>
 
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-            >
-              <ChartLine className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Trade Desk</span>}
-            </Button>
+            <Link to="#">
+              <Button
+                variant="ghost"
+                className={`text-white hover:bg-white/10 w-full justify-start ${
+                  sidebarOpen ? "px-4" : "px-2"
+                }`}
+              >
+                <ChartLine className="h-5 w-5" />
+                {sidebarOpen && <span className="ml-2">Trade Desk</span>}
+              </Button>
+            </Link>
 
             <Link to="/demo/portfolio/history">
               <Button
