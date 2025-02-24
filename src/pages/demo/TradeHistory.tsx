@@ -1,5 +1,5 @@
 
-import { ArrowDown, ArrowUp, History, Menu, ArrowLeft } from "lucide-react";
+import { ArrowDown, ArrowUp, History, Menu, ArrowLeft, Briefcase, ChartLine } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -98,7 +98,7 @@ const TradeHistory = () => {
                   sidebarOpen ? "px-4" : "px-2"
                 }`}
               >
-                <History className="h-5 w-5" />
+                <Briefcase className="h-5 w-5" />
                 {sidebarOpen && <span className="ml-2">Dashboard</span>}
               </Button>
             </Link>
@@ -111,6 +111,16 @@ const TradeHistory = () => {
             >
               <History className="h-5 w-5" />
               {sidebarOpen && <span className="ml-2">Trade History</span>}
+            </Button>
+
+            <Button
+              variant="ghost"
+              className={`text-white hover:bg-white/10 w-full justify-start ${
+                sidebarOpen ? "px-4" : "px-2"
+              }`}
+            >
+              <ChartLine className="h-5 w-5" />
+              {sidebarOpen && <span className="ml-2">Trade Desk</span>}
             </Button>
           </div>
         </div>
