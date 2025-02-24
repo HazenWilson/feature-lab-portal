@@ -1,6 +1,6 @@
 
 const YAHOO_FINANCE_API_BASE = "https://query1.finance.yahoo.com";
-const CORS_PROXY = "https://cors-proxy.fringe.zone";
+const CORS_PROXY = "https://api.allorigins.win/raw?url=";
 
 export interface YahooSearchResult {
   symbol: string;
@@ -15,9 +15,8 @@ export const searchSymbols = async (query: string): Promise<YahooSearchResult[]>
   if (!query) return [];
   
   try {
-    const response = await fetch(
-      `${CORS_PROXY}/${YAHOO_FINANCE_API_BASE}/v1/finance/search?q=${encodeURIComponent(query)}&quotesCount=6&newsCount=0&enableFuzzyQuery=false&enableEnhancedTrivialQuery=true&quotesQueryId=tss_match_phrase_query`
-    );
+    const encodedUrl = encodeURIComponent(`${YAHOO_FINANCE_API_BASE}/v1/finance/search?q=${query}&quotesCount=6&newsCount=0&enableFuzzyQuery=false&enableEnhancedTrivialQuery=true&quotesQueryId=tss_match_phrase_query`);
+    const response = await fetch(`${CORS_PROXY}${encodedUrl}`);
     
     if (!response.ok) {
       console.error('Yahoo Finance API Error:', await response.text());
