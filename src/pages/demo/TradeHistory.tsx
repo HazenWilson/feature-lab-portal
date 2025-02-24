@@ -69,16 +69,21 @@ const TradeHistory = () => {
         }`}
       >
         <div className="p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-white/10 mb-6"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center gap-2 mb-6">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            {sidebarOpen && (
+              <span className="text-lg font-semibold">Portfolio</span>
+            )}
+          </div>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <Link to="/demo">
               <Button
                 variant="ghost"
