@@ -16,7 +16,7 @@ const TradingViewWidget = ({ symbol = "AAPL" }: TradingViewWidgetProps) => {
       if (typeof window.TradingView !== 'undefined') {
         new window.TradingView.widget({
           autosize: true,
-          symbol: `NASDAQ:${symbol}`,
+          symbol: symbol, // Removed the NASDAQ: prefix to let TradingView handle exchange
           interval: "D",
           timezone: "America/New_York",
           theme: "light",
