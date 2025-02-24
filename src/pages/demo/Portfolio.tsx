@@ -131,7 +131,7 @@ const Portfolio = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-12">
+          <div className="flex items-center gap-2 mb-6">
             <Button
               variant="ghost"
               size="icon"
@@ -145,7 +145,7 @@ const Portfolio = () => {
             )}
           </div>
 
-          <nav className="space-y-12">
+          <nav className="space-y-6">
             <div>
               <Link to="/demo">
                 <Button
