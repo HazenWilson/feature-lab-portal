@@ -1,3 +1,4 @@
+
 import { DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -154,7 +155,7 @@ const Portfolio = () => {
 
             <Button
               variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
+              className={`text-white hover:bg-white/10 w-full justify-start bg-white/10 ${
                 sidebarOpen ? "px-4" : "px-2"
               }`}
             >
@@ -162,15 +163,17 @@ const Portfolio = () => {
               {sidebarOpen && <span className="ml-2">Dashboard</span>}
             </Button>
 
-            <Button
-              variant="ghost"
-              className={`text-white hover:bg-white/10 w-full justify-start ${
-                sidebarOpen ? "px-4" : "px-2"
-              }`}
-            >
-              <History className="h-5 w-5" />
-              {sidebarOpen && <span className="ml-2">Trade History</span>}
-            </Button>
+            <Link to="/demo/portfolio/history">
+              <Button
+                variant="ghost"
+                className={`text-white hover:bg-white/10 w-full justify-start ${
+                  sidebarOpen ? "px-4" : "px-2"
+                }`}
+              >
+                <History className="h-5 w-5" />
+                {sidebarOpen && <span className="ml-2">Trade History</span>}
+              </Button>
+            </Link>
 
             <Button
               variant="ghost"
