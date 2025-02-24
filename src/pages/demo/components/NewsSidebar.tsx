@@ -37,7 +37,7 @@ export const NewsSidebar = ({
           )}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <Link to="/demo">
             <Button
               variant="ghost"
