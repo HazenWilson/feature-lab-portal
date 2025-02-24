@@ -79,7 +79,7 @@ const TradeHistory = () => {
               <Menu className="h-5 w-5" />
             </Button>
             {sidebarOpen && (
-              <span className="text-lg font-semibold">Portfolio</span>
+              <span className="text-lg font-semibold">Nϵα</span>
             )}
           </div>
 
@@ -137,7 +137,7 @@ const TradeHistory = () => {
 
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">

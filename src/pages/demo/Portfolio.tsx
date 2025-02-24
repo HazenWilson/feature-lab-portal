@@ -1,4 +1,3 @@
-
 import { DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -141,7 +140,7 @@ const Portfolio = () => {
               <Menu className="h-5 w-5" />
             </Button>
             {sidebarOpen && (
-              <span className="text-lg font-semibold">Portfolio</span>
+              <span className="text-lg font-semibold">Nϵα</span>
             )}
           </div>
 
@@ -199,7 +198,7 @@ const Portfolio = () => {
 
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
-          <div className="max-w-5xl mx-auto mb-8">
+          <div className="max-w-7xl mx-auto mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold">Personal Portfolio Value</h2>
@@ -276,7 +275,7 @@ const Portfolio = () => {
             </Card>
           </div>
 
-          <div className="max-w-5xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="max-w-7xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="p-6">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 rounded-lg bg-primary/10">
@@ -306,7 +305,7 @@ const Portfolio = () => {
             </Card>
           </div>
 
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
