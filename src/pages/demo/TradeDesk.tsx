@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { Menu, ArrowLeft, Briefcase, ChartLine, History } from "lucide-react";
+
+import { useState, useEffect } from "react";
+import { Menu, ArrowLeft, Briefcase, ChartLine, History, Search, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import TradingViewWidget from "@/components/TradingViewWidget";
+import { searchSymbols, type YahooSearchResult } from "@/utils/yahooFinance";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
 
 // Mock accounts data
 const accounts = [
@@ -17,10 +23,29 @@ const accounts = [
 const TradeDesk = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(accounts[0].id);
-  const [searchQuery, setSearchQuery] = useState("AAPL");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSymbol, setSelectedSymbol] = useState("AAPL");
+  const [selectedCompanyName, setSelectedCompanyName] = useState("Apple Inc.");
+  const [searchResults, setSearchResults] = useState<YahooSearchResult[]>([]);
+  const [open, setOpen] = useState(false);
   const [selectedOrderType, setSelectedOrderType] = useState("market");
   const [selectedBuyIn, setSelectedBuyIn] = useState("shares");
   const [quantity, setQuantity] = useState("");
+
+  const debouncedSearch = useDebounce(searchQuery, 300);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (debouncedSearch) {
+        const results = await searchSymbols(debouncedSearch);
+        setSearchResults(results);
+      } else {
+        setSearchResults([]);
+      }
+    };
+
+    fetchResults();
+  }, [debouncedSearch]);
 
   // Mock price data
   const marketPrice = 100.00;
@@ -125,19 +150,81 @@ const TradeDesk = () => {
                   ))}
                 </SelectContent>
               </Select>
-              <Input
-                type="text"
-                placeholder="Search symbol..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1"
-              />
+              
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="flex-1 justify-between text-left font-normal"
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Search className="h-4 w-4 shrink-0 opacity-50" />
+                      {selectedSymbol ? (
+                        <div className="flex flex-col">
+                          <span className="font-medium">{selectedSymbol}</span>
+                          <span className="text-sm text-muted-foreground">{selectedCompanyName}</span>
+                        </div>
+                      ) : (
+                        "Search symbols..."
+                      )}
+                    </div>
+                    {selectedSymbol && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-4 w-4 p-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedSymbol("");
+                          setSelectedCompanyName("");
+                          setSearchQuery("");
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput
+                      placeholder="Search symbol or company name..."
+                      value={searchQuery}
+                      onValueChange={setSearchQuery}
+                      className="h-9"
+                    />
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandGroup>
+                      {searchResults.map((result) => (
+                        <CommandItem
+                          key={result.symbol}
+                          value={result.symbol}
+                          onSelect={() => {
+                            setSelectedSymbol(result.symbol);
+                            setSelectedCompanyName(result.name);
+                            setOpen(false);
+                          }}
+                        >
+                          <div className="flex flex-col">
+                            <span>{result.symbol}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {result.name}
+                            </span>
+                          </div>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
 
             {/* TradingView Chart */}
             <Card className="mb-6 p-4 h-[500px]">
               <div className="w-full h-full" id="tradingview_chart">
-                <TradingViewWidget symbol={searchQuery} />
+                <TradingViewWidget symbol={selectedSymbol} />
               </div>
             </Card>
 
