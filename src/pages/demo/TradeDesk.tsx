@@ -12,7 +12,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
 
-// Mock accounts data
 const accounts = [
   { id: "1", name: "Main Trading Account" },
   { id: "2", name: "Investment Account" },
@@ -51,13 +50,11 @@ const TradeDesk = () => {
     fetchResults();
   }, [debouncedSearch]);
 
-  // Mock price data
   const marketPrice = 100.00;
   const estimatedCost = quantity ? Number(quantity) * marketPrice : 0;
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Sidebar */}
       <div
         className={`fixed left-0 top-0 h-full bg-black text-white transition-all duration-300 z-50 ${
           sidebarOpen ? "w-64" : "w-16"
@@ -136,11 +133,9 @@ const TradeDesk = () => {
         </div>
       </div>
 
-      {/* Main content */}
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
           <div className="max-w-7xl mx-auto">
-            {/* Top bar with account selector and search */}
             <div className="flex gap-4 mb-6">
               <Select value={selectedAccount} onValueChange={setSelectedAccount}>
                 <SelectTrigger className="w-[240px]">
@@ -200,15 +195,15 @@ const TradeDesk = () => {
                               value={result.symbol}
                               onSelect={() => {
                                 setSelectedSymbol(result.symbol);
-                                setSelectedCompanyName(result.name);
-                                setSearchQuery(`${result.symbol} - ${result.name}`);
+                                setSelectedCompanyName(result.longname || result.shortname);
+                                setSearchQuery(`${result.symbol} - ${result.longname || result.shortname}`);
                                 setShowResults(false);
                               }}
                               className="flex flex-col items-start"
                             >
                               <span className="font-medium">{result.symbol}</span>
                               <span className="text-sm text-muted-foreground">
-                                {result.name}
+                                {result.longname || result.shortname}
                               </span>
                             </CommandItem>
                           ))}
@@ -220,14 +215,12 @@ const TradeDesk = () => {
               </div>
             </div>
 
-            {/* TradingView Chart */}
             <Card className="mb-6 p-4 h-[500px]">
               <div className="w-full h-full" id="tradingview_chart">
                 <TradingViewWidget symbol={selectedSymbol} />
               </div>
             </Card>
 
-            {/* Buy/Sell Card */}
             <Card className="mb-6 p-6">
               <div className="flex gap-4 mb-6">
                 <Button 
@@ -297,7 +290,6 @@ const TradeDesk = () => {
               </Button>
             </Card>
 
-            {/* Additional Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-2">Trade Options</h3>
