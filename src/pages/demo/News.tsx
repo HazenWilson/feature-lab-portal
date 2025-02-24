@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { NewsSidebar } from "./components/NewsSidebar";
 import { NewsCard, type NewsItem } from "./components/NewsCard";
@@ -110,7 +111,7 @@ const News = () => {
             setSelectedImpact={setSelectedImpact}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            selectedSource={setSelectedSource}
+            selectedSource={selectedSource}
             setSelectedSource={setSelectedSource}
             selectedSector={selectedSector}
             setSelectedSector={setSelectedSector}
