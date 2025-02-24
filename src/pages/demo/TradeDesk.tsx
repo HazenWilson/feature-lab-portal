@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Menu, ArrowLeft, Briefcase, ChartLine, History, Search, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -8,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import { searchSymbols, type YahooSearchResult } from "@/utils/yahooFinance";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -27,7 +26,7 @@ const TradeDesk = () => {
   const [selectedSymbol, setSelectedSymbol] = useState("AAPL");
   const [selectedCompanyName, setSelectedCompanyName] = useState("Apple Inc.");
   const [searchResults, setSearchResults] = useState<YahooSearchResult[]>([]);
-  const [open, setOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const [selectedOrderType, setSelectedOrderType] = useState("market");
   const [selectedBuyIn, setSelectedBuyIn] = useState("shares");
   const [quantity, setQuantity] = useState("");
@@ -156,78 +155,69 @@ const TradeDesk = () => {
                 </SelectContent>
               </Select>
               
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="flex-1 justify-between text-left font-normal"
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Search className="h-4 w-4 shrink-0 opacity-50" />
-                      {selectedSymbol ? (
-                        <div className="flex flex-col">
-                          <span className="font-medium">{selectedSymbol}</span>
-                          <span className="text-sm text-muted-foreground">{selectedCompanyName}</span>
-                        </div>
-                      ) : (
-                        "Search symbols..."
-                      )}
-                    </div>
-                    {selectedSymbol && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedSymbol("");
-                          setSelectedCompanyName("");
-                          setSearchQuery("");
-                        }}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                  <Command>
-                    <CommandInput
-                      placeholder="Search symbol or company name..."
-                      value={searchQuery}
-                      onValueChange={setSearchQuery}
-                      className="h-9"
-                    />
-                    <CommandList>
-                      {searchResults.length === 0 && searchQuery && (
-                        <CommandEmpty>No results found.</CommandEmpty>
-                      )}
-                      <CommandGroup>
-                        {searchResults.map((result) => (
-                          <CommandItem
-                            key={result.symbol}
-                            value={result.symbol}
-                            onSelect={() => {
-                              setSelectedSymbol(result.symbol);
-                              setSelectedCompanyName(result.name);
-                              setOpen(false);
-                            }}
-                          >
-                            <div className="flex flex-col">
-                              <span>{result.symbol}</span>
+              <div className="flex-1 relative">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+                  <Input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setShowResults(true);
+                    }}
+                    onFocus={() => setShowResults(true)}
+                    placeholder="Search symbol or company name..."
+                    className="w-full pl-9 pr-8"
+                  />
+                  {searchQuery && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 p-0"
+                      onClick={() => {
+                        setSearchQuery("");
+                        setSelectedSymbol("");
+                        setSelectedCompanyName("");
+                        setSearchResults([]);
+                      }}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+
+                {showResults && (searchResults.length > 0 || searchQuery) && (
+                  <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-50">
+                    <Command className="rounded-lg border shadow-md">
+                      <CommandList>
+                        {searchResults.length === 0 && searchQuery && (
+                          <CommandEmpty>No results found.</CommandEmpty>
+                        )}
+                        <CommandGroup>
+                          {searchResults.map((result) => (
+                            <CommandItem
+                              key={result.symbol}
+                              value={result.symbol}
+                              onSelect={() => {
+                                setSelectedSymbol(result.symbol);
+                                setSelectedCompanyName(result.name);
+                                setSearchQuery(`${result.symbol} - ${result.name}`);
+                                setShowResults(false);
+                              }}
+                              className="flex flex-col items-start"
+                            >
+                              <span className="font-medium">{result.symbol}</span>
                               <span className="text-sm text-muted-foreground">
                                 {result.name}
                               </span>
-                            </div>
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* TradingView Chart */}
