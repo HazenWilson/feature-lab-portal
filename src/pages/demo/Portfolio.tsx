@@ -190,7 +190,7 @@ const Portfolio = () => {
           <div className="max-w-5xl mx-auto mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Portfolio Value</h2>
+                <h2 className="text-2xl font-bold">Personal Portfolio Value</h2>
                 <div className="text-right">
                   <div className="text-3xl font-bold">$23,000.00</div>
                   <div className="text-sm text-green-500">+$8,000.00 (53.33%)</div>
