@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Menu, ArrowLeft, Briefcase, ChartLine, History, Search, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -6,16 +7,14 @@ import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import TradingViewWidget from "@/components/TradingViewWidget";
-import { searchSymbols, type YahooSearchResult } from "@/utils/yahooFinance";
+import { searchSymbols, getQuote, type YahooSearchResult } from "@/utils/yahooFinance";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
 
 const accounts = [
-  { id: "1", name: "Main Trading Account" },
-  { id: "2", name: "Investment Account" },
-  { id: "3", name: "Retirement Account" },
+  { id: "1", name: "Main Trading Account", positions: { AAPL: 100, GOOGL: 50, MSFT: 75 } },
+  { id: "2", name: "Investment Account", positions: { TSLA: 25, AMZN: 30 } },
+  { id: "3", name: "Retirement Account", positions: { VOO: 200, VTI: 150 } },
 ];
 
 const TradeDesk = () => {
@@ -29,9 +28,12 @@ const TradeDesk = () => {
   const [selectedOrderType, setSelectedOrderType] = useState("market");
   const [selectedBuyIn, setSelectedBuyIn] = useState("shares");
   const [quantity, setQuantity] = useState("");
+  const [tradeMode, setTradeMode] = useState<"buy" | "sell">("buy");
+  const [marketPrice, setMarketPrice] = useState<number | null>(null);
 
   const debouncedSearch = useDebounce(searchQuery, 300);
 
+  // Handle symbol search
   useEffect(() => {
     const fetchResults = async () => {
       if (debouncedSearch) {
@@ -50,8 +52,24 @@ const TradeDesk = () => {
     fetchResults();
   }, [debouncedSearch]);
 
-  const marketPrice = 100.00;
-  const estimatedCost = quantity ? Number(quantity) * marketPrice : 0;
+  // Fetch market price when symbol changes
+  useEffect(() => {
+    const fetchQuote = async () => {
+      if (selectedSymbol) {
+        const quote = await getQuote(selectedSymbol);
+        setMarketPrice(quote?.regularMarketPrice || null);
+      }
+    };
+
+    fetchQuote();
+    // Refresh quote every 10 seconds
+    const interval = setInterval(fetchQuote, 10000);
+    return () => clearInterval(interval);
+  }, [selectedSymbol]);
+
+  const selectedAccountData = accounts.find(acc => acc.id === selectedAccount);
+  const availableShares = selectedAccountData?.positions[selectedSymbol] || 0;
+  const estimatedCost = quantity && marketPrice ? Number(quantity) * marketPrice : 0;
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -224,13 +242,14 @@ const TradeDesk = () => {
             <Card className="mb-6 p-6">
               <div className="flex gap-4 mb-6">
                 <Button 
-                  className="flex-1 text-lg py-6 bg-green-600 hover:bg-green-700"
+                  className={`flex-1 text-lg py-6 ${tradeMode === 'buy' ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'}`}
+                  onClick={() => setTradeMode('buy')}
                 >
                   Buy {selectedSymbol}
                 </Button>
                 <Button 
-                  variant="outline" 
-                  className="flex-1 text-lg py-6"
+                  className={`flex-1 text-lg py-6 ${tradeMode === 'sell' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'}`}
+                  onClick={() => setTradeMode('sell')}
                 >
                   Sell {selectedSymbol}
                 </Button>
@@ -263,6 +282,12 @@ const TradeDesk = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  {tradeMode === 'sell' && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg">Available Shares</span>
+                      <span className="text-lg">{availableShares}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-4">
                   <div>
@@ -272,21 +297,30 @@ const TradeDesk = () => {
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                       placeholder="0"
+                      max={tradeMode === 'sell' ? availableShares : undefined}
                     />
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-lg">Market Price</span>
-                    <span className="text-lg">${marketPrice.toFixed(2)}</span>
+                    <span className="text-lg">
+                      {marketPrice ? `$${marketPrice.toFixed(2)}` : 'Loading...'}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold">Estimated Cost</span>
+                    <span className="text-lg font-semibold">Estimated {tradeMode === 'buy' ? 'Cost' : 'Credit'}</span>
                     <span className="text-lg font-semibold">${estimatedCost.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
-              <Button className="w-full mt-6 py-6 text-lg bg-green-600 hover:bg-green-700">
-                Review Purchase
+              <Button 
+                className={`w-full mt-6 py-6 text-lg ${
+                  tradeMode === 'buy' 
+                    ? 'bg-green-600 hover:bg-green-700' 
+                    : 'bg-red-600 hover:bg-red-700'
+                }`}
+              >
+                Review {tradeMode === 'buy' ? 'Purchase' : 'Sale'}
               </Button>
             </Card>
 

@@ -10,6 +10,11 @@ export interface YahooSearchResult {
   typeDisp: string;
 }
 
+export interface YahooQuoteResult {
+  regularMarketPrice: number;
+  regularMarketPreviousClose: number;
+}
+
 export const searchSymbols = async (query: string): Promise<YahooSearchResult[]> => {
   if (!query) return [];
   
@@ -28,5 +33,26 @@ export const searchSymbols = async (query: string): Promise<YahooSearchResult[]>
   } catch (error) {
     console.error('Error fetching symbol data:', error);
     return [];
+  }
+};
+
+export const getQuote = async (symbol: string): Promise<YahooQuoteResult | null> => {
+  if (!symbol) return null;
+  
+  try {
+    const encodedUrl = encodeURIComponent(`${YAHOO_FINANCE_API_BASE}/v6/finance/quote?symbols=${symbol}`);
+    const response = await fetch(`${CORS_PROXY}${encodedUrl}`);
+    
+    if (!response.ok) {
+      console.error('Yahoo Finance API Error:', await response.text());
+      throw new Error('Failed to fetch quote data from Yahoo Finance');
+    }
+
+    const data = await response.json();
+    console.log('Yahoo Finance Quote Response:', data);
+    return data.quoteResponse?.result?.[0] || null;
+  } catch (error) {
+    console.error('Error fetching quote data:', error);
+    return null;
   }
 };
