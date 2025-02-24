@@ -37,8 +37,13 @@ const TradeDesk = () => {
   useEffect(() => {
     const fetchResults = async () => {
       if (debouncedSearch) {
-        const results = await searchSymbols(debouncedSearch);
-        setSearchResults(results);
+        try {
+          const results = await searchSymbols(debouncedSearch);
+          setSearchResults(results || []);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+          setSearchResults([]);
+        }
       } else {
         setSearchResults([]);
       }
@@ -195,8 +200,10 @@ const TradeDesk = () => {
                       onValueChange={setSearchQuery}
                       className="h-9"
                     />
-                    <CommandEmpty>No results found.</CommandEmpty>
                     <CommandGroup>
+                      {searchResults.length === 0 && searchQuery && (
+                        <CommandEmpty>No results found.</CommandEmpty>
+                      )}
                       {searchResults.map((result) => (
                         <CommandItem
                           key={result.symbol}
