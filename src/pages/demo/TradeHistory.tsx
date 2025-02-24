@@ -69,7 +69,7 @@ const TradeHistory = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-8">
             <Button
               variant="ghost"
               size="icon"
@@ -83,7 +83,7 @@ const TradeHistory = () => {
             )}
           </div>
 
-          <div className="space-y-6">
+          <nav className="space-y-8">
             <Link to="/demo">
               <Button
                 variant="ghost"
@@ -131,7 +131,7 @@ const TradeHistory = () => {
                 {sidebarOpen && <span className="ml-2">Trade History</span>}
               </Button>
             </Link>
-          </div>
+          </nav>
         </div>
       </div>
 

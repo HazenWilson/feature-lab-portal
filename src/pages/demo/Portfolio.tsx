@@ -1,3 +1,4 @@
+
 import { DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -130,7 +131,7 @@ const Portfolio = () => {
         }`}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-8">
             <Button
               variant="ghost"
               size="icon"
@@ -144,7 +145,7 @@ const Portfolio = () => {
             )}
           </div>
 
-          <div className="space-y-6">
+          <nav className="space-y-8">
             <Link to="/demo">
               <Button
                 variant="ghost"
@@ -192,7 +193,7 @@ const Portfolio = () => {
                 {sidebarOpen && <span className="ml-2">Trade History</span>}
               </Button>
             </Link>
-          </div>
+          </nav>
         </div>
       </div>
 
