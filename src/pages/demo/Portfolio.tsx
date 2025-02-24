@@ -1,4 +1,4 @@
-import { Search, DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
+import { DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -13,7 +13,6 @@ import {
   ResponsiveContainer,
   Area
 } from "recharts";
-import { searchSymbols, type YahooSearchResult } from "@/utils/yahooFinance";
 import { cn } from "@/lib/utils";
 
 type TimeFrame = '24h' | '1w' | '1m' | '3m' | '1y' | 'ytd' | 'all';
@@ -122,23 +121,6 @@ const timeFrameLabels: Record<TimeFrame, string> = {
 const Portfolio = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("1m");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<YahooSearchResult[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const handleSearch = async (query: string) => {
-    setSearchQuery(query);
-    
-    if (query.length < 2) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsSearching(true);
-    const results = await searchSymbols(query);
-    setSearchResults(results);
-    setIsSearching(false);
-  };
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -176,6 +158,16 @@ const Portfolio = () => {
                 sidebarOpen ? "px-4" : "px-2"
               }`}
             >
+              <Briefcase className="h-5 w-5" />
+              {sidebarOpen && <span className="ml-2">Dashboard</span>}
+            </Button>
+
+            <Button
+              variant="ghost"
+              className={`text-white hover:bg-white/10 w-full justify-start ${
+                sidebarOpen ? "px-4" : "px-2"
+              }`}
+            >
               <History className="h-5 w-5" />
               {sidebarOpen && <span className="ml-2">Trade History</span>}
             </Button>
@@ -195,48 +187,6 @@ const Portfolio = () => {
 
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
-          <div className="max-w-5xl mx-auto mb-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search stocks, options, or crypto..."
-                className="w-full pl-10 pr-4 py-3 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
-              {searchResults.length > 0 && searchQuery.length >= 2 && (
-                <div className="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-[300px] overflow-y-auto">
-                  {searchResults.map((result) => (
-                    <button
-                      key={result.symbol}
-                      className={cn(
-                        "w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center justify-between",
-                        "border-b last:border-b-0"
-                      )}
-                      onClick={() => {
-                        setSearchQuery("");
-                        setSearchResults([]);
-                        // Here you can add logic to handle the selected symbol
-                      }}
-                    >
-                      <div>
-                        <div className="font-medium">{result.symbol}</div>
-                        <div className="text-sm text-gray-500">{result.name}</div>
-                      </div>
-                      <div className="text-xs text-gray-400">{result.typeDisp}</div>
-                    </button>
-                  ))}
-                </div>
-              )}
-              {isSearching && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <div className="animate-spin h-5 w-5 border-2 border-primary border-t-transparent rounded-full"/>
-                </div>
-              )}
-            </div>
-          </div>
-
           <div className="max-w-5xl mx-auto mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
