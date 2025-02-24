@@ -11,6 +11,7 @@ import Legal from "./pages/Legal";
 import Pricing from "./pages/Pricing";
 import Portfolio from "./pages/demo/Portfolio";
 import TradeHistory from "./pages/demo/TradeHistory";
+import TradeDesk from "./pages/demo/TradeDesk";
 import InvestmentClub from "./pages/demo/InvestmentClub";
 import News from "./pages/demo/News";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/demo/portfolio" element={<Portfolio />} />
+          <Route path="/demo/portfolio/trade" element={<TradeDesk />} />
           <Route path="/demo/portfolio/history" element={<TradeHistory />} />
           <Route path="/demo/investment-club" element={<InvestmentClub />} />
           <Route path="/demo/news" element={<News />} />

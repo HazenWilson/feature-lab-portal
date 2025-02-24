@@ -1,4 +1,3 @@
-
 import { DollarSign, Bot, Briefcase, ChartLine, Database, BarChart, ArrowLeft, History, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -175,7 +174,7 @@ const Portfolio = () => {
             </div>
 
             <div>
-              <Link to="#">
+              <Link to="/demo/portfolio/trade">
                 <Button
                   variant="ghost"
                   className={`text-white hover:bg-white/10 w-full justify-start ${
