@@ -40,7 +40,7 @@ export const getQuote = async (symbol: string): Promise<YahooQuoteResult | null>
   if (!symbol) return null;
   
   try {
-    const encodedUrl = encodeURIComponent(`${YAHOO_FINANCE_API_BASE}/v6/finance/quote?symbols=${symbol}`);
+    const encodedUrl = encodeURIComponent(`${YAHOO_FINANCE_API_BASE}/v8/finance/chart/${symbol}?range=1d&interval=1m`);
     const response = await fetch(`${CORS_PROXY}${encodedUrl}`);
     
     if (!response.ok) {
@@ -50,7 +50,15 @@ export const getQuote = async (symbol: string): Promise<YahooQuoteResult | null>
 
     const data = await response.json();
     console.log('Yahoo Finance Quote Response:', data);
-    return data.quoteResponse?.result?.[0] || null;
+    
+    if (data.chart?.result?.[0]?.meta) {
+      const quote = data.chart.result[0];
+      return {
+        regularMarketPrice: quote.meta.regularMarketPrice,
+        regularMarketPreviousClose: quote.meta.previousClose
+      };
+    }
+    return null;
   } catch (error) {
     console.error('Error fetching quote data:', error);
     return null;
