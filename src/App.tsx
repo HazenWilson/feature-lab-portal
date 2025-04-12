@@ -14,6 +14,7 @@ import TradeHistory from "./pages/demo/TradeHistory";
 import TradeDesk from "./pages/demo/TradeDesk";
 import InvestmentClub from "./pages/demo/InvestmentClub";
 import News from "./pages/demo/News";
+import TradingBots from "./pages/demo/TradingBots";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/demo/portfolio/history" element={<TradeHistory />} />
           <Route path="/demo/investment-club" element={<InvestmentClub />} />
           <Route path="/demo/news" element={<News />} />
+          <Route path="/demo/trading-bots" element={<TradingBots />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/pricing" element={<Pricing />} />
