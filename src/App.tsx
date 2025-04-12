@@ -16,6 +16,7 @@ import InvestmentClub from "./pages/demo/InvestmentClub";
 import News from "./pages/demo/News";
 import TradingBots from "./pages/demo/TradingBots";
 import Theses from "./pages/demo/Theses";
+import AIChat from "./pages/demo/AIChat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/demo/news" element={<News />} />
           <Route path="/demo/trading-bots" element={<TradingBots />} />
           <Route path="/demo/theses" element={<Theses />} />
+          <Route path="/demo/ai-chat" element={<AIChat />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/pricing" element={<Pricing />} />
