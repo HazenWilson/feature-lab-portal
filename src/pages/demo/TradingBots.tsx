@@ -10,6 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Sample bot data for the browse bots section
 const tradingBots = [
@@ -140,7 +147,18 @@ const TradingBots = () => {
     stopLoss: 3.5,
     takeProfit: 8.2,
     usePresetSettings: true,
+    account: "paper-1", // Default account
   });
+
+  // Available trading accounts
+  const tradingAccounts = [
+    { id: "paper-1", name: "Paper Trading Account 1" },
+    { id: "paper-2", name: "Paper Trading Account 2" },
+    { id: "paper-3", name: "Paper Trading Account 3" },
+    { id: "coinbase", name: "Personal - Coinbase" },
+    { id: "alpaca", name: "Personal - Alpaca" },
+    { id: "investment-club", name: "Investment Club" },
+  ];
 
   const handleBotSelect = (bot) => {
     setSelectedBot(bot);
@@ -150,6 +168,7 @@ const TradingBots = () => {
       stopLoss: bot.settings.defaultStopLoss,
       takeProfit: bot.settings.defaultTakeProfit,
       usePresetSettings: true,
+      account: "paper-1", // Default account
     });
   };
 
@@ -161,7 +180,7 @@ const TradingBots = () => {
     setDeploymentConfig({
       ...deploymentConfig,
       [field]: value,
-      usePresetSettings: false,
+      usePresetSettings: field !== "account" ? false : deploymentConfig.usePresetSettings,
     });
   };
 
@@ -322,6 +341,25 @@ const TradingBots = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="account">Deploy to Account</Label>
+                        <Select
+                          value={deploymentConfig.account}
+                          onValueChange={(value) => handleDeploymentConfigChange("account", value)}
+                        >
+                          <SelectTrigger id="account" className="w-full">
+                            <SelectValue placeholder="Select an account" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {tradingAccounts.map((account) => (
+                              <SelectItem key={account.id} value={account.id}>
+                                {account.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
                       <div className="space-y-2">
                         <Label htmlFor="capital">Capital Allocation ($)</Label>
                         <Input 
