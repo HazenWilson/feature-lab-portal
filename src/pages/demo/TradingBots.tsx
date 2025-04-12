@@ -150,14 +150,14 @@ const TradingBots = () => {
     account: "paper-1", // Default account
   });
 
-  // Available trading accounts
+  // Available trading accounts with cash balances
   const tradingAccounts = [
-    { id: "paper-1", name: "Paper Trading Account 1" },
-    { id: "paper-2", name: "Paper Trading Account 2" },
-    { id: "paper-3", name: "Paper Trading Account 3" },
-    { id: "coinbase", name: "Personal - Coinbase" },
-    { id: "alpaca", name: "Personal - Alpaca" },
-    { id: "investment-club", name: "Investment Club" },
+    { id: "paper-1", name: "Paper Trading Account 1", balance: 25000 },
+    { id: "paper-2", name: "Paper Trading Account 2", balance: 50000 },
+    { id: "paper-3", name: "Paper Trading Account 3", balance: 10000 },
+    { id: "coinbase", name: "Personal - Coinbase", balance: 5230.45 },
+    { id: "alpaca", name: "Personal - Alpaca", balance: 8750.20 },
+    { id: "investment-club", name: "Investment Club", balance: 120500.75 },
   ];
 
   const handleBotSelect = (bot) => {
@@ -353,7 +353,12 @@ const TradingBots = () => {
                           <SelectContent>
                             {tradingAccounts.map((account) => (
                               <SelectItem key={account.id} value={account.id}>
-                                {account.name}
+                                <div className="flex justify-between w-full">
+                                  <span>{account.name}</span>
+                                  <span className="text-sm font-medium text-green-600">
+                                    ${account.balance.toLocaleString()}
+                                  </span>
+                                </div>
                               </SelectItem>
                             ))}
                           </SelectContent>
