@@ -21,10 +21,10 @@ import { mockTheses } from "../data/ThesesData";
 
 const ThesisStream = () => {
   const [filters, setFilters] = useState({
-    signal: "",
-    sector: "",
+    signal: "all",
+    sector: "all",
     company: "",
-    newsType: "",
+    newsType: "all",
     search: "",
   });
   
@@ -34,10 +34,10 @@ const ThesisStream = () => {
   
   const filteredTheses = mockTheses.filter(thesis => {
     return (
-      (filters.signal === "" || thesis.signal === filters.signal) &&
-      (filters.sector === "" || thesis.sector === filters.sector) &&
+      (filters.signal === "all" || thesis.signal === filters.signal) &&
+      (filters.sector === "all" || thesis.sector === filters.sector) &&
       (filters.company === "" || thesis.company.toLowerCase().includes(filters.company.toLowerCase())) &&
-      (filters.newsType === "" || thesis.newsType === filters.newsType) &&
+      (filters.newsType === "all" || thesis.newsType === filters.newsType) &&
       (filters.search === "" || 
         thesis.title.toLowerCase().includes(filters.search.toLowerCase()) || 
         thesis.summary.toLowerCase().includes(filters.search.toLowerCase()))
@@ -71,7 +71,7 @@ const ThesisStream = () => {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Signals</SelectItem>
+                <SelectItem value="all">All Signals</SelectItem>
                 <SelectItem value="buy">
                   <div className="flex items-center gap-2">
                     <TrendingUp className="h-4 w-4 text-green-500" />
@@ -98,7 +98,7 @@ const ThesisStream = () => {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Sectors</SelectItem>
+                <SelectItem value="all">All Sectors</SelectItem>
                 <SelectItem value="technology">Technology</SelectItem>
                 <SelectItem value="healthcare">Healthcare</SelectItem>
                 <SelectItem value="finance">Finance</SelectItem>
@@ -118,7 +118,7 @@ const ThesisStream = () => {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="earnings">Earnings</SelectItem>
                 <SelectItem value="merger">Merger/Acquisition</SelectItem>
                 <SelectItem value="product">Product Launch</SelectItem>
@@ -130,10 +130,10 @@ const ThesisStream = () => {
             <Button 
               variant="outline"
               onClick={() => setFilters({
-                signal: "",
-                sector: "",
+                signal: "all",
+                sector: "all",
                 company: "",
-                newsType: "",
+                newsType: "all",
                 search: "",
               })}
               className="bg-white"
