@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { TradingBotsSidebar } from "./components/TradingBotsSidebar";
 import { 
@@ -18,7 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Sample bot data for the browse bots section
 const tradingBots = [
   {
     id: 1,
@@ -150,7 +148,6 @@ const TradingBots = () => {
     account: "paper-1", // Default account
   });
 
-  // Available trading accounts with cash balances
   const tradingAccounts = [
     { id: "paper-1", name: "Paper Trading Account 1", balance: 25000 },
     { id: "paper-2", name: "Paper Trading Account 2", balance: 50000 },
@@ -195,7 +192,6 @@ const TradingBots = () => {
   };
 
   const renderPerformanceChart = (bot) => {
-    // Simple bar chart to represent monthly performance
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const maxValue = Math.max(...bot.backtest.performanceByMonth.map(Math.abs));
     
@@ -279,7 +275,6 @@ const TradingBots = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Bot Description */}
                 <Card className="lg:col-span-2">
                   <CardHeader>
                     <CardTitle>Description</CardTitle>
@@ -333,7 +328,6 @@ const TradingBots = () => {
                   </CardFooter>
                 </Card>
 
-                {/* Deployment Configuration */}
                 <Card>
                   <CardHeader>
                     <CardTitle>Deployment Configuration</CardTitle>
@@ -353,9 +347,9 @@ const TradingBots = () => {
                           <SelectContent>
                             {tradingAccounts.map((account) => (
                               <SelectItem key={account.id} value={account.id}>
-                                <div className="flex justify-between w-full">
+                                <div className="flex justify-between w-full items-center">
                                   <span>{account.name}</span>
-                                  <span className="text-sm font-medium text-green-600">
+                                  <span className="text-sm font-medium text-green-600 ml-4">
                                     ${account.balance.toLocaleString()}
                                   </span>
                                 </div>
