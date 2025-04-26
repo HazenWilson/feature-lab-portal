@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   LineChart,
   Line,
   XAxis,
@@ -13,7 +20,12 @@ import {
   ResponsiveContainer,
   Area
 } from "recharts";
-import { cn } from "@/lib/utils";
+
+const accounts = [
+  { id: "1", name: "Main Trading Account", positions: { AAPL: 100, GOOGL: 50, MSFT: 75 } },
+  { id: "2", name: "Investment Account", positions: { TSLA: 25, AMZN: 30 } },
+  { id: "3", name: "Retirement Account", positions: { VOO: 200, VTI: 150 } },
+];
 
 type TimeFrame = '24h' | '1w' | '1m' | '3m' | '1y' | 'ytd' | 'all';
 
@@ -121,6 +133,7 @@ const timeFrameLabels: Record<TimeFrame, string> = {
 const Portfolio = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("1m");
+  const [selectedAccount, setSelectedAccount] = useState(accounts[0].id);
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -206,188 +219,205 @@ const Portfolio = () => {
 
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
-          <div className="max-w-7xl mx-auto mb-8">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Personal Portfolio Value</h2>
-                <div className="text-right">
-                  <div className="text-3xl font-bold">$23,000.00</div>
-                  <div className="text-sm text-green-500">+$8,000.00 (53.33%)</div>
-                </div>
-              </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+              <Select value={selectedAccount} onValueChange={setSelectedAccount}>
+                <SelectTrigger className="w-[240px]">
+                  <SelectValue placeholder="Select account" />
+                </SelectTrigger>
+                <SelectContent>
+                  {accounts.map((account) => (
+                    <SelectItem key={account.id} value={account.id}>
+                      {account.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-              <div className="h-[400px] mb-6">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData[selectedTimeFrame]} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                    <defs>
-                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#34D399" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#34D399" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                    <XAxis 
-                      dataKey="date" 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#666666', fontSize: 12 }}
-                    />
-                    <YAxis 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#666666', fontSize: 12 }}
-                      width={80}
-                      tickFormatter={(value) => `$${value.toLocaleString()}`}
-                    />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'white',
-                        border: '2px solid #f0f0f0',
-                        borderRadius: '8px',
-                        padding: '8px'
-                      }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#34D399"
-                      strokeWidth={2}
-                      fillOpacity={1}
-                      fill="url(#colorValue)"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#34D399"
-                      strokeWidth={2}
-                      dot={false}
-                      activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="flex gap-2 justify-center">
-                {(Object.keys(timeFrameLabels) as TimeFrame[]).map((timeFrame) => (
-                  <Button
-                    key={timeFrame}
-                    variant={selectedTimeFrame === timeFrame ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedTimeFrame(timeFrame)}
-                    className="min-w-12 transition-all duration-200 hover:scale-105"
-                  >
-                    {timeFrameLabels[timeFrame]}
-                  </Button>
-                ))}
-              </div>
-            </Card>
-          </div>
-
-          <div className="max-w-7xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <DollarSign className="h-5 w-5 text-primary" />
+            <div className="max-w-7xl mx-auto mb-8">
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold">Personal Portfolio Value</h2>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold">$23,000.00</div>
+                    <div className="text-sm text-green-500">+$8,000.00 (53.33%)</div>
+                  </div>
                 </div>
-                <h3 className="font-semibold">Total Cash</h3>
-              </div>
-              <div className="text-2xl font-bold">${mockData.cash.total.toLocaleString()}</div>
-            </Card>
-            <Card className="p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Bot className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-semibold">Allocated to Bots</h3>
-              </div>
-              <div className="text-2xl font-bold">${mockData.cash.allocated.toLocaleString()}</div>
-            </Card>
-            <Card className="p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <DollarSign className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-semibold">Available Cash</h3>
-              </div>
-              <div className="text-2xl font-bold">${mockData.cash.available.toLocaleString()}</div>
-            </Card>
-          </div>
 
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
+                <div className="h-[400px] mb-6">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={chartData[selectedTimeFrame]} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                      <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#34D399" stopOpacity={0.2}/>
+                          <stop offset="95%" stopColor="#34D399" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                      <XAxis 
+                        dataKey="date" 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#666666', fontSize: 12 }}
+                      />
+                      <YAxis 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#666666', fontSize: 12 }}
+                        width={80}
+                        tickFormatter={(value) => `$${value.toLocaleString()}`}
+                      />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'white',
+                          border: '2px solid #f0f0f0',
+                          borderRadius: '8px',
+                          padding: '8px'
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#34D399"
+                        strokeWidth={2}
+                        fillOpacity={1}
+                        fill="url(#colorValue)"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#34D399"
+                        strokeWidth={2}
+                        dot={false}
+                        activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div className="flex gap-2 justify-center">
+                  {(Object.keys(timeFrameLabels) as TimeFrame[]).map((timeFrame) => (
+                    <Button
+                      key={timeFrame}
+                      variant={selectedTimeFrame === timeFrame ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedTimeFrame(timeFrame)}
+                      className="min-w-12 transition-all duration-200 hover:scale-105"
+                    >
+                      {timeFrameLabels[timeFrame]}
+                    </Button>
+                  ))}
+                </div>
+              </Card>
+            </div>
+
+            <div className="max-w-7xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="p-6">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 rounded-lg bg-primary/10">
-                    <BarChart className="h-5 w-5 text-primary" />
+                    <DollarSign className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold">Options</h3>
+                  <h3 className="font-semibold">Total Cash</h3>
                 </div>
-              </div>
-              <div className="space-y-4">
-                {mockData.options.map((option) => (
-                  <div key={option.symbol} className="border-b pb-4 last:border-0">
-                    <div className="flex justify-between mb-1">
-                      <div className="font-semibold">{option.symbol} {option.type}</div>
-                      <div>${option.value}</div>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <div>{option.expiry} • {option.quantity}</div>
-                      <div className="text-gray-500">{option.change}%</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
+                <div className="text-2xl font-bold">${mockData.cash.total.toLocaleString()}</div>
+              </Card>
+              <Card className="p-6">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 rounded-lg bg-primary/10">
-                    <Database className="h-5 w-5 text-primary" />
+                    <Bot className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold">Crypto</h3>
+                  <h3 className="font-semibold">Allocated to Bots</h3>
                 </div>
-              </div>
-              <div className="space-y-4">
-                {mockData.crypto.map((crypto) => (
-                  <div key={crypto.symbol} className="border-b pb-4 last:border-0">
-                    <div className="flex justify-between mb-1">
-                      <div className="font-semibold">{crypto.symbol}</div>
-                      <div>${crypto.value.toLocaleString()}</div>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <div>{crypto.quantity}</div>
-                      <div className="text-green-500">+{crypto.change}%</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
+                <div className="text-2xl font-bold">${mockData.cash.allocated.toLocaleString()}</div>
+              </Card>
+              <Card className="p-6">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 rounded-lg bg-primary/10">
-                    <Briefcase className="h-5 w-5 text-primary" />
+                    <DollarSign className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold">Stocks</h3>
+                  <h3 className="font-semibold">Available Cash</h3>
                 </div>
-              </div>
-              <div className="space-y-4">
-                {mockData.stocks.map((stock) => (
-                  <div key={stock.symbol} className="border-b pb-4 last:border-0">
-                    <div className="flex justify-between mb-1">
-                      <div className="font-semibold">{stock.symbol}</div>
-                      <div>${stock.value}</div>
+                <div className="text-2xl font-bold">${mockData.cash.available.toLocaleString()}</div>
+              </Card>
+            </div>
+
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <BarChart className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <div>{stock.shares}</div>
-                      <div className="text-green-500">+{stock.change}%</div>
-                    </div>
+                    <h3 className="font-semibold">Options</h3>
                   </div>
-                ))}
-              </div>
-            </Card>
+                </div>
+                <div className="space-y-4">
+                  {mockData.options.map((option) => (
+                    <div key={option.symbol} className="border-b pb-4 last:border-0">
+                      <div className="flex justify-between mb-1">
+                        <div className="font-semibold">{option.symbol} {option.type}</div>
+                        <div>${option.value}</div>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <div>{option.expiry} • {option.quantity}</div>
+                        <div className="text-gray-500">{option.change}%</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <Database className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold">Crypto</h3>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {mockData.crypto.map((crypto) => (
+                    <div key={crypto.symbol} className="border-b pb-4 last:border-0">
+                      <div className="flex justify-between mb-1">
+                        <div className="font-semibold">{crypto.symbol}</div>
+                        <div>${crypto.value.toLocaleString()}</div>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <div>{crypto.quantity}</div>
+                        <div className="text-green-500">+{crypto.change}%</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <Briefcase className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold">Stocks</h3>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {mockData.stocks.map((stock) => (
+                    <div key={stock.symbol} className="border-b pb-4 last:border-0">
+                      <div className="flex justify-between mb-1">
+                        <div className="font-semibold">{stock.symbol}</div>
+                        <div>${stock.value}</div>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <div>{stock.shares}</div>
+                        <div className="text-green-500">+{stock.change}%</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
