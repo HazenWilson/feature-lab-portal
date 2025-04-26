@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import {
   Users,
@@ -9,11 +8,10 @@ import {
   LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 
 const AppHome = () => {
   const navigate = useNavigate();
-  const supabase = createClient();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
