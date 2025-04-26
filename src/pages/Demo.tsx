@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import {
   Briefcase,
@@ -77,6 +78,11 @@ const tools = [
     name: "Watch List",
     icon: ListChecks,
     path: "/demo/watch-list",
+  },
+  {
+    name: "Paper Trading",
+    icon: LineChart,
+    path: "/demo/paper-trading",
   },
   {
     name: "Settings",
