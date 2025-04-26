@@ -7,12 +7,10 @@ import {
   MessageSquare,
   ListChecks,
 } from "lucide-react";
-import MainNav from "@/components/MainNav";
 
 const AppHome = () => {
   return (
     <div className="min-h-screen bg-white">
-      <MainNav />
       <div className="p-8">
         <div className="max-w-5xl mx-auto">
           <div className="mb-8">
