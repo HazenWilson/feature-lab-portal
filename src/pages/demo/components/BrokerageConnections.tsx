@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Link, Settings, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
+import { ConnectBrokerageDialog } from "./ConnectBrokerageDialog";
 
 type ConnectedAccount = {
   id: string;
@@ -17,7 +17,7 @@ type BrokerageService = {
 };
 
 export const BrokerageConnections = () => {
-  const [brokerages] = useState<BrokerageService[]>([
+  const [brokerages, setBrokerages] = useState<BrokerageService[]>([
     {
       name: "Alpaca",
       description: "Connect your Alpaca live trading account",
@@ -50,12 +50,47 @@ export const BrokerageConnections = () => {
     },
   ]);
 
+  const [selectedBrokerage, setSelectedBrokerage] = useState<string | null>(null);
+
   const handleConnect = (brokerageName: string) => {
-    console.log(`Connecting to ${brokerageName}`);
+    setSelectedBrokerage(brokerageName);
+  };
+
+  const handleSaveAccount = (brokerageName: string, data: {
+    accountType: string;
+    apiKey: string;
+    accountName: string;
+  }) => {
+    setBrokerages(brokerages.map(brokerage => {
+      if (brokerage.name === brokerageName) {
+        return {
+          ...brokerage,
+          connectedAccounts: [
+            ...brokerage.connectedAccounts,
+            {
+              id: Math.random().toString(36).substr(2, 9),
+              name: data.accountName,
+              type: data.accountType,
+            },
+          ],
+        };
+      }
+      return brokerage;
+    }));
   };
 
   const handleDisconnect = (brokerageName: string, accountId: string) => {
-    console.log(`Disconnecting account ${accountId} from ${brokerageName}`);
+    setBrokerages(brokerages.map(brokerage => {
+      if (brokerage.name === brokerageName) {
+        return {
+          ...brokerage,
+          connectedAccounts: brokerage.connectedAccounts.filter(
+            account => account.id !== accountId
+          ),
+        };
+      }
+      return brokerage;
+    }));
   };
 
   return (
@@ -106,6 +141,15 @@ export const BrokerageConnections = () => {
           </CardContent>
         </Card>
       ))}
+
+      {selectedBrokerage && (
+        <ConnectBrokerageDialog
+          isOpen={true}
+          onClose={() => setSelectedBrokerage(null)}
+          brokerageName={selectedBrokerage}
+          onSave={(data) => handleSaveAccount(selectedBrokerage, data)}
+        />
+      )}
     </div>
   );
 };
