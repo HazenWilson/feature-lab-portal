@@ -20,6 +20,9 @@ import NotFound from "./pages/NotFound";
 import WatchList from "./pages/demo/WatchList";
 import WatchListNewsFeed from "./pages/demo/WatchListNewsFeed";
 import EditWatchList from "./pages/demo/EditWatchList";
+import PaperTrading from "./pages/demo/PaperTrading";
+import PaperTradingDesk from "./pages/demo/PaperTradingDesk";
+import PaperTradingHistory from "./pages/demo/PaperTradingHistory";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +46,9 @@ const App = () => (
           <Route path="/demo/watch-list" element={<WatchList />} />
           <Route path="/demo/watch-list/news" element={<WatchListNewsFeed />} />
           <Route path="/demo/watch-list/edit" element={<EditWatchList />} />
+          <Route path="/demo/paper-trading" element={<PaperTrading />} />
+          <Route path="/demo/paper-trading/trade" element={<PaperTradingDesk />} />
+          <Route path="/demo/paper-trading/history" element={<PaperTradingHistory />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
