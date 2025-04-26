@@ -1,18 +1,40 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Users,
   Newspaper,
   BookOpen,
   MessageSquare,
   ListChecks,
+  LogOut,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/integrations/supabase/client";
 
 const AppHome = () => {
+  const navigate = useNavigate();
+  const supabase = createClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="p-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="relative max-w-5xl mx-auto">
+          <div className="absolute top-0 right-0">
+            <Button 
+              variant="ghost" 
+              className="gap-2" 
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          </div>
+          
           <div className="mb-8">
             <h1 className="text-3xl font-bold">Nϵα</h1>
           </div>
