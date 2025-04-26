@@ -1,11 +1,15 @@
 
 import { Link } from "react-router-dom";
 import {
+  Briefcase,
   Users,
   Newspaper,
+  Bot,
   BookOpen,
   MessageSquare,
+  Settings,
   ListChecks,
+  LineChart,
 } from "lucide-react";
 import MainNav from "@/components/MainNav";
 
@@ -19,7 +23,7 @@ const Demo = () => {
             <h1 className="text-3xl font-bold">Nϵα</h1>
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
             {tools.map((tool) => (
               <Link
                 key={tool.name}
@@ -41,6 +45,11 @@ const Demo = () => {
 
 const tools = [
   {
+    name: "Portfolio",
+    icon: Briefcase,
+    path: "/demo/portfolio",
+  },
+  {
     name: "Investment Club",
     icon: Users,
     path: "/demo/investment-club",
@@ -51,9 +60,19 @@ const tools = [
     path: "/demo/news",
   },
   {
+    name: "Trading Bots",
+    icon: Bot,
+    path: "/demo/trading-bots",
+  },
+  {
     name: "Theses",
     icon: BookOpen,
     path: "/demo/theses",
+  },
+  {
+    name: "AI Chat",
+    icon: MessageSquare,
+    path: "/demo/ai-chat",
   },
   {
     name: "Watch List",
@@ -61,9 +80,14 @@ const tools = [
     path: "/demo/watch-list",
   },
   {
-    name: "AI Chat",
-    icon: MessageSquare,
-    path: "/demo/ai-chat",
+    name: "Paper Trading",
+    icon: LineChart,
+    path: "/demo/paper-trading",
+  },
+  {
+    name: "Settings",
+    icon: Settings,
+    path: "/demo/settings",
   },
 ];
 
