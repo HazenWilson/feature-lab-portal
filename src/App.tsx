@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,9 @@ import TradingBots from "./pages/demo/TradingBots";
 import Theses from "./pages/demo/Theses";
 import AIChat from "./pages/demo/AIChat";
 import NotFound from "./pages/NotFound";
+import WatchList from "./pages/demo/WatchList";
+import WatchListNewsFeed from "./pages/demo/WatchListNewsFeed";
+import EditWatchList from "./pages/demo/EditWatchList";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,9 @@ const App = () => (
           <Route path="/demo/trading-bots" element={<TradingBots />} />
           <Route path="/demo/theses" element={<Theses />} />
           <Route path="/demo/ai-chat" element={<AIChat />} />
+          <Route path="/demo/watch-list" element={<WatchList />} />
+          <Route path="/demo/watch-list/news" element={<WatchListNewsFeed />} />
+          <Route path="/demo/watch-list/edit" element={<EditWatchList />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/pricing" element={<Pricing />} />
