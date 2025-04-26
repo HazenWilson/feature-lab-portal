@@ -37,7 +37,7 @@ export const WatchListSidebar = ({
           )}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2">
           <Link to="/demo">
             <Button
               variant="ghost"
