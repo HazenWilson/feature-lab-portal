@@ -3,7 +3,7 @@ import { useState } from "react";
 import { WatchListSidebar } from "./components/WatchListSidebar";
 
 const EditWatchList = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("edit");
 
   return (

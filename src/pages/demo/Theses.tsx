@@ -5,7 +5,7 @@ import ThesisStream from "./components/ThesisStream";
 import GenerateThesis from "./components/GenerateThesis";
 
 const Theses = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<string>("thesis-stream");
 
   return (
