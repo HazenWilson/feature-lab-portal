@@ -46,7 +46,7 @@ const MainNav = () => {
               variant="ghost"
               className="gap-2"
             >
-              <Link to="/login">
+              <Link to="/app">
                 <LogIn className="h-4 w-4" />
                 Login
               </Link>
@@ -55,7 +55,7 @@ const MainNav = () => {
               asChild
               className="gap-2 bg-black text-white hover:bg-gray-800"
             >
-              <Link to="/signup">
+              <Link to="/app">
                 <UserPlus className="h-4 w-4" />
                 Sign Up
               </Link>

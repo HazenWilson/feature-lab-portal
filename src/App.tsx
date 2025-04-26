@@ -24,6 +24,7 @@ import PaperTrading from "./pages/demo/PaperTrading";
 import PaperTradingDesk from "./pages/demo/PaperTradingDesk";
 import PaperTradingHistory from "./pages/demo/PaperTradingHistory";
 import Settings from "./pages/demo/Settings";
+import AppHome from "./pages/App";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
           <Route path="/demo/paper-trading/trade" element={<PaperTradingDesk />} />
           <Route path="/demo/paper-trading/history" element={<PaperTradingHistory />} />
           <Route path="/demo/settings" element={<Settings />} />
+          <Route path="/app" element={<AppHome />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
