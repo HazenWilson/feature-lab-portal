@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import {
   Users,
@@ -50,12 +51,12 @@ const AppHome = () => {
               <Link
                 key={tool.name}
                 to={tool.path}
-                className="group p-4 border-2 border-gray-200 rounded-lg bg-white transition-all duration-300 hover:shadow-md hover:border-primary flex flex-col items-center justify-center text-center"
+                className="group aspect-square border-2 border-gray-200 rounded-lg bg-white transition-all duration-300 hover:shadow-md hover:border-primary flex flex-col items-center justify-center text-center p-2"
               >
-                <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-primary/10 transition-colors mb-2">
+                <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-primary/10 transition-colors mb-2 flex items-center justify-center aspect-square">
                   <tool.icon className="w-6 h-6 text-gray-600 group-hover:text-primary" />
                 </div>
-                <h2 className="font-medium text-sm">{tool.name}</h2>
+                <h2 className="font-medium text-sm mt-2">{tool.name}</h2>
               </Link>
             ))}
           </div>
