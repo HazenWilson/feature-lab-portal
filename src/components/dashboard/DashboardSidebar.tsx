@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Menu, ArrowLeft } from "lucide-react";
+import { Menu, ArrowLeft, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DashboardSidebarProps {
@@ -43,6 +43,18 @@ export function DashboardSidebar({
             >
               <ArrowLeft className="h-5 w-5" />
               {sidebarOpen && <span className="ml-2">Back to App</span>}
+            </Button>
+          </Link>
+
+          <Link to="/app/investment-club">
+            <Button
+              variant="ghost"
+              className={`text-white hover:bg-white/10 w-full justify-start ${
+                sidebarOpen ? "px-4" : "px-2"
+              }`}
+            >
+              <Users className="h-5 w-5" />
+              {sidebarOpen && <span className="ml-2">Investment Clubs</span>}
             </Button>
           </Link>
         </div>
