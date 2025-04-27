@@ -232,7 +232,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_club_admin: {
+        Args: { club_uuid: string; user_uuid: string }
+        Returns: boolean
+      }
+      is_club_member: {
+        Args: { club_uuid: string; user_uuid: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

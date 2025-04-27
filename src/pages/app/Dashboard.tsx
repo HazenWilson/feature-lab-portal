@@ -84,7 +84,8 @@ export default function Dashboard() {
     if (!user) return;
     
     try {
-      const { data, error } = await supabase
+      // Step 1: Create the investment club
+      const { data: clubData, error: clubError } = await supabase
         .from('investment_clubs')
         .insert([
           {
@@ -95,7 +96,30 @@ export default function Dashboard() {
         ])
         .select();
         
-      if (error) throw error;
+      if (clubError) throw clubError;
+      
+      if (!clubData || clubData.length === 0) {
+        throw new Error("Failed to create club");
+      }
+      
+      const newClubId = clubData[0].id;
+      
+      // Step 2: Add the creator as an Admin member
+      const { error: memberError } = await supabase
+        .from('club_members')
+        .insert([
+          {
+            club_id: newClubId,
+            user_id: user.id,
+            role: 'Admin',
+            ownership_percentage: 100 // Initial owner has 100%
+          }
+        ]);
+      
+      if (memberError) {
+        console.error("Error adding creator as member:", memberError);
+        // Continue anyway as the club was created
+      }
       
       toast.success("Investment club created successfully");
       setIsDialogOpen(false);
