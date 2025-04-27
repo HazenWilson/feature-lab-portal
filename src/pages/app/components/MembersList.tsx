@@ -2,8 +2,8 @@
 import { Users } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-interface Member {
-  id: number;
+export interface Member {
+  id: number | string;
   name: string;
   role: string;
   joinDate: string;
