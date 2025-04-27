@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AppHome from "./pages/App";
 import AppInvestmentClub from "./pages/app/InvestmentClub";
+import Dashboard from "./pages/app/Dashboard";
 
 // Import demo pages
 import Demo from "./pages/demo/Demo";
@@ -33,7 +34,12 @@ const queryClient = new QueryClient();
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { session } = useAuth();
+  const { session, isLoading } = useAuth();
+  
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
   
   if (!session) {
     return <Navigate to="/auth" replace />;
@@ -52,22 +58,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route
-              path="/app"
-              element={
-                <ProtectedRoute>
-                  <AppHome />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/app/investment-club"
-              element={
-                <ProtectedRoute>
-                  <AppInvestmentClub />
-                </ProtectedRoute>
-              }
-            />
+            
+            {/* Protected App Routes */}
+            <Route path="/app" element={<ProtectedRoute><AppHome /></ProtectedRoute>} />
+            <Route path="/app/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/app/investment-club/:id" element={<ProtectedRoute><AppInvestmentClub /></ProtectedRoute>} />
+            
+            {/* Demo Routes (Unprotected) */}
             <Route path="/demo" element={<Demo />} />
             <Route path="/demo/portfolio" element={<Portfolio />} />
             <Route path="/demo/portfolio/trade" element={<TradeDesk />} />
@@ -84,6 +81,8 @@ const App = () => (
             <Route path="/demo/paper-trading/trade" element={<PaperTradingDesk />} />
             <Route path="/demo/paper-trading/history" element={<PaperTradingHistory />} />
             <Route path="/demo/settings" element={<Settings />} />
+            
+            {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
