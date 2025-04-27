@@ -91,7 +91,7 @@ const tools = [
   {
     name: "Investment Club",
     icon: Users,
-    path: "/app/dashboard",
+    path: "/app/investment-club",
   },
   {
     name: "News",
