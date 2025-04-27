@@ -2,18 +2,13 @@
 import { ChevronDown, PlusCircle, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
-interface Club {
-  id: number;
-  name: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ClubHeaderProps {
-  selectedClub: Club;
+  selectedClub: any;
   clubSelectorOpen: boolean;
   setClubSelectorOpen: (open: boolean) => void;
-  setSelectedClub: (club: Club) => void;
-  clubs: Club[];
   currentSection: string;
 }
 
@@ -21,10 +16,20 @@ export const ClubHeader = ({
   selectedClub,
   clubSelectorOpen,
   setClubSelectorOpen,
-  setSelectedClub,
-  clubs,
   currentSection,
 }: ClubHeaderProps) => {
+  const { data: clubs = [] } = useQuery({
+    queryKey: ['user-clubs'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('investment_clubs')
+        .select('*');
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const renderActionButtons = () => {
     switch (currentSection) {
       case "getting-started":
@@ -58,6 +63,8 @@ export const ClubHeader = ({
     }
   };
 
+  if (!selectedClub) return null;
+
   return (
     <div className="max-w-5xl mx-auto mb-8">
       <div className="flex items-center justify-between">
@@ -78,7 +85,7 @@ export const ClubHeader = ({
                   variant="ghost"
                   className="w-full justify-start"
                   onClick={() => {
-                    setSelectedClub(club);
+                    window.location.href = `/app/investment-club/${club.id}`;
                     setClubSelectorOpen(false);
                   }}
                 >

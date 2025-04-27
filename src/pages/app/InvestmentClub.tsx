@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ClubSidebar } from "./components/ClubSidebar";
@@ -5,38 +6,72 @@ import { ClubHeader } from "./components/ClubHeader";
 import { PendingMembershipRequests } from "./components/PendingMembershipRequests";
 import { MembersList } from "./components/MembersList";
 import { OwnershipDistribution } from "./components/OwnershipDistribution";
-
-const mockClubs = [
-  { id: 1, name: "Tech Investors Club" },
-  { id: 2, name: "Value Investing Group" },
-  { id: 3, name: "Crypto Trading Club" },
-];
-
-const mockPendingMembers = [
-  { id: 1, name: "John Doe", requestDate: "1/23/2025" },
-  { id: 2, name: "Jane Smith", requestDate: "1/23/2025" },
-];
-
-const mockMembers = [
-  { id: 1, name: "John Smith", role: "Admin", joinDate: "Dec 31, 2023", initialInvestment: 25000, currentEquity: 27500 },
-  { id: 2, name: "Sarah Johnson", role: "Member", joinDate: "Jan 14, 2024", initialInvestment: 15000, currentEquity: 16200 },
-  { id: 3, name: "Michael Brown", role: "Member", joinDate: "Jan 31, 2024", initialInvestment: 10000, currentEquity: 10800 },
-];
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const InvestmentClub = () => {
+  const { id } = useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedClub, setSelectedClub] = useState(mockClubs[0]);
   const [clubSelectorOpen, setClubSelectorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState("getting-started");
 
+  // Fetch club data
+  const { data: club, isLoading: isLoadingClub } = useQuery({
+    queryKey: ['club', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('investment_clubs')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fetch club members
+  const { data: members = [], isLoading: isLoadingMembers } = useQuery({
+    queryKey: ['club-members', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('club_members')
+        .select('*, profiles(*)')
+        .eq('club_id', id);
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fetch pending membership requests
+  const { data: pendingRequests = [], isLoading: isLoadingRequests } = useQuery({
+    queryKey: ['membership-requests', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('membership_requests')
+        .select('*, profiles(*)')
+        .eq('club_id', id)
+        .eq('status', 'pending');
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const renderContent = () => {
+    if (isLoadingClub || isLoadingMembers || isLoadingRequests) {
+      return <div className="flex justify-center items-center h-64">Loading...</div>;
+    }
+
     switch (currentSection) {
       case "members":
         return (
           <div className="space-y-6">
-            <PendingMembershipRequests pendingMembers={mockPendingMembers} />
-            <MembersList members={mockMembers} />
-            <OwnershipDistribution members={mockMembers} />
+            <PendingMembershipRequests pendingMembers={pendingRequests} />
+            <MembersList members={members} />
+            <OwnershipDistribution members={members} />
           </div>
         );
       case "getting-started":
@@ -153,7 +188,7 @@ const InvestmentClub = () => {
       default:
         return (
           <Card className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Welcome to {selectedClub.name}</h1>
+            <h1 className="text-2xl font-bold mb-4">Welcome to {club?.name}</h1>
             <p className="text-gray-600">
               Select an option from the sidebar to get started with your investment club activities.
             </p>
@@ -174,11 +209,9 @@ const InvestmentClub = () => {
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         <div className="p-8">
           <ClubHeader
-            selectedClub={selectedClub}
+            selectedClub={club}
             clubSelectorOpen={clubSelectorOpen}
             setClubSelectorOpen={setClubSelectorOpen}
-            setSelectedClub={setSelectedClub}
-            clubs={mockClubs}
             currentSection={currentSection}
           />
 
