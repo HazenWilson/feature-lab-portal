@@ -36,7 +36,15 @@ const InvestmentClub = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('club_members')
-        .select('*, profiles:user_id(full_name, avatar_url)')
+        .select(`
+          *,
+          user:user_id (
+            profiles (
+              full_name,
+              avatar_url
+            )
+          )
+        `)
         .eq('club_id', id);
       
       if (error) throw error;
@@ -50,7 +58,15 @@ const InvestmentClub = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('membership_requests')
-        .select('*, profiles:user_id(full_name, avatar_url)')
+        .select(`
+          *,
+          user:user_id (
+            profiles (
+              full_name,
+              avatar_url
+            )
+          )
+        `)
         .eq('club_id', id)
         .eq('status', 'pending');
       
@@ -62,16 +78,16 @@ const InvestmentClub = () => {
   // Transform data to match expected types
   const members = membersData.map(member => ({
     id: member.id,
-    name: member.profiles?.full_name || 'Unknown User',
+    name: member.user?.profiles?.[0]?.full_name || 'Unknown User',
     role: member.role,
     joinDate: new Date(member.joined_at || Date.now()).toLocaleDateString(),
     initialInvestment: 1000, // Placeholder values
-    currentEquity: member.ownership_percentage ? member.ownership_percentage * 1000 : 1000 // Using ownership_percentage as a base
+    currentEquity: member.ownership_percentage ? member.ownership_percentage * 1000 : 1000
   }));
 
   const pendingMembers = requestsData.map(request => ({
     id: request.id,
-    name: request.profiles?.full_name || 'Unknown User',
+    name: request.user?.profiles?.[0]?.full_name || 'Unknown User',
     requestDate: new Date(request.created_at || Date.now()).toLocaleDateString()
   }));
 
