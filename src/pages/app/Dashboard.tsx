@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -44,9 +46,10 @@ export default function Dashboard() {
         
       if (ownedError) throw ownedError;
       
+      // For the club members query, simplified to avoid excessive type instantiation
       const { data: memberClubs, error: memberError } = await supabase
         .from('club_members')
-        .select('club_id, role, investment_clubs(*)')
+        .select('club_id, role, investment_clubs:club_id(*)')
         .eq('user_id', user.id);
         
       if (memberError) throw memberError;
