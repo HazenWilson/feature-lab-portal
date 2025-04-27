@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,25 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AppHome from "./pages/App";
 import AppInvestmentClub from "./pages/app/InvestmentClub";
+
+// Import demo pages
+import Demo from "./pages/demo/Demo";
+import Portfolio from "./pages/demo/Portfolio";
+import TradeDesk from "./pages/demo/TradeDesk";
+import TradeHistory from "./pages/demo/TradeHistory";
+import InvestmentClub from "./pages/demo/InvestmentClub";
+import News from "./pages/demo/News";
+import TradingBots from "./pages/demo/TradingBots";
+import Theses from "./pages/demo/Theses";
+import AIChat from "./pages/demo/AIChat";
+import WatchList from "./pages/demo/WatchList";
+import WatchListNewsFeed from "./pages/demo/WatchListNewsFeed";
+import EditWatchList from "./pages/demo/EditWatchList";
+import PaperTrading from "./pages/demo/PaperTrading";
+import PaperTradingDesk from "./pages/demo/PaperTradingDesk";
+import PaperTradingHistory from "./pages/demo/PaperTradingHistory";
+import Settings from "./pages/demo/Settings";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
