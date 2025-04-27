@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
 export default function Auth() {
@@ -68,14 +67,28 @@ export default function Auth() {
     }
   };
 
+  const handleGoBack = () => {
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Nϵα</h1>
-          <h2 className="mt-6 text-2xl font-bold tracking-tight">
-            {isSignUp ? "Create your account" : "Sign in to your account"}
-          </h2>
+        <div className="relative">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute left-0 top-0"
+            onClick={handleGoBack}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Nϵα</h1>
+            <h2 className="mt-6 text-2xl font-bold tracking-tight">
+              {isSignUp ? "Create your account" : "Sign in to your account"}
+            </h2>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
