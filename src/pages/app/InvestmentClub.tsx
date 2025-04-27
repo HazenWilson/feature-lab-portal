@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ClubSidebar } from "./components/ClubSidebar";
@@ -36,16 +37,24 @@ const InvestmentClub = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('club_members')
-        .select(`
-          *,
-          user:user_id (
-            profiles (
-              full_name,
-              avatar_url
-            )
-          )
-        `)
+        .select('*, user_id')
         .eq('club_id', id);
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+  
+  // Fetch user profiles for members
+  const memberIds = membersData.map(member => member.user_id);
+  const { data: profilesData = [] } = useQuery({
+    queryKey: ['member-profiles', memberIds],
+    enabled: memberIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .in('id', memberIds);
       
       if (error) throw error;
       return data;
@@ -58,15 +67,7 @@ const InvestmentClub = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('membership_requests')
-        .select(`
-          *,
-          user:user_id (
-            profiles (
-              full_name,
-              avatar_url
-            )
-          )
-        `)
+        .select('*, user_id')
         .eq('club_id', id)
         .eq('status', 'pending');
       
@@ -74,22 +75,44 @@ const InvestmentClub = () => {
       return data;
     },
   });
+  
+  // Fetch user profiles for requesters
+  const requesterIds = requestsData.map(request => request.user_id);
+  const { data: requesterProfilesData = [] } = useQuery({
+    queryKey: ['requester-profiles', requesterIds],
+    enabled: requesterIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .in('id', requesterIds);
+      
+      if (error) throw error;
+      return data;
+    },
+  });
 
   // Transform data to match expected types
-  const members = membersData.map(member => ({
-    id: member.id,
-    name: member.user?.profiles?.[0]?.full_name || 'Unknown User',
-    role: member.role,
-    joinDate: new Date(member.joined_at || Date.now()).toLocaleDateString(),
-    initialInvestment: 1000, // Placeholder values
-    currentEquity: member.ownership_percentage ? member.ownership_percentage * 1000 : 1000
-  }));
+  const members = membersData.map(member => {
+    const profile = profilesData.find(p => p.id === member.user_id);
+    return {
+      id: member.id,
+      name: profile?.full_name || 'Unknown User',
+      role: member.role,
+      joinDate: new Date(member.joined_at || Date.now()).toLocaleDateString(),
+      initialInvestment: 1000, // Placeholder values
+      currentEquity: member.ownership_percentage ? member.ownership_percentage * 1000 : 1000
+    };
+  });
 
-  const pendingMembers = requestsData.map(request => ({
-    id: request.id,
-    name: request.user?.profiles?.[0]?.full_name || 'Unknown User',
-    requestDate: new Date(request.created_at || Date.now()).toLocaleDateString()
-  }));
+  const pendingMembers = requestsData.map(request => {
+    const profile = requesterProfilesData.find(p => p.id === request.user_id);
+    return {
+      id: request.id,
+      name: profile?.full_name || 'Unknown User',
+      requestDate: new Date(request.created_at || Date.now()).toLocaleDateString()
+    };
+  });
 
   const renderContent = () => {
     if (isLoadingClub || isLoadingMembers || isLoadingRequests) {
