@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import {
   Users,
@@ -47,38 +46,28 @@ const AppHome = () => {
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-            <Link
-              to="/app/dashboard"
-              className="group p-3 border-2 border-primary rounded-lg bg-primary/5 transition-all duration-300 hover:shadow-md flex flex-col items-center justify-center text-center"
-            >
-              <div className="p-2 rounded-lg bg-primary/20 group-hover:bg-primary/30 transition-colors mb-1">
-                <LayoutDashboard className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="font-medium text-xs">Dashboard</h2>
-            </Link>
-            
             {tools.map((tool) => (
               <Link
                 key={tool.name}
                 to={tool.path}
-                className="group p-3 border-2 border-black rounded-lg bg-white transition-all duration-300 hover:shadow-md flex flex-col items-center justify-center text-center"
+                className="group p-4 border-2 border-gray-200 rounded-lg bg-white transition-all duration-300 hover:shadow-md hover:border-primary flex flex-col items-center justify-center text-center"
               >
-                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-1">
-                  <tool.icon className="w-5 h-5 text-primary" />
+                <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-primary/10 transition-colors mb-2">
+                  <tool.icon className="w-6 h-6 text-gray-600 group-hover:text-primary" />
                 </div>
-                <h2 className="font-medium text-xs">{tool.name}</h2>
+                <h2 className="font-medium text-sm">{tool.name}</h2>
               </Link>
             ))}
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
             <h2 className="text-xl font-semibold mb-4">Getting Started</h2>
-            <ol className="list-decimal pl-5 space-y-2">
-              <li>Visit your <Link to="/app/dashboard" className="text-blue-600 hover:underline">Dashboard</Link> to create or join investment clubs</li>
-              <li>Collaborate with other members by inviting them to your clubs</li>
-              <li>Track investments and monitor performance together</li>
-              <li>Create watchlists to follow potential investments</li>
-              <li>Discuss investment strategies within your club</li>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Join or create an investment club in the Investment Clubs tool to collaborate with others</li>
+              <li>Read and filter through the latest news articles to stay informed</li>
+              <li>Review investment theses to understand different perspectives</li>
+              <li>Create and manage your watchlist of potential investments</li>
+              <li>Chat with our AI system about companies or news for deeper insights</li>
             </ol>
           </div>
         </div>
