@@ -53,9 +53,9 @@ const AppHome = () => {
                 className="group aspect-square border border-gray-100 rounded-md bg-white transition-all duration-300 hover:shadow-sm hover:border-primary flex flex-col items-center justify-center text-center p-0.5"
               >
                 <div className="p-0.5 rounded-sm bg-gray-50 group-hover:bg-primary/10 transition-colors mb-0.5 flex items-center justify-center aspect-square">
-                  <tool.icon className="w-3 h-3 text-gray-600 group-hover:text-primary" />
+                  <tool.icon className="w-4 h-4 text-gray-600 group-hover:text-primary" />
                 </div>
-                <h2 className="font-medium text-[0.5rem] truncate max-w-full">{tool.name}</h2>
+                <h2 className="font-medium text-[0.65rem] truncate max-w-full px-0.5">{tool.name}</h2>
               </Link>
             ))}
           </div>
