@@ -51,7 +51,7 @@ const AppHome = () => {
               <Link
                 key={tool.name}
                 to={tool.path}
-                className="group aspect-square border border-gray-100 rounded-md bg-white transition-all duration-300 hover:shadow-sm hover:border-primary flex flex-col items-center justify-center text-center p-0.5"
+                className="group aspect-square border-2 border-gray-200 rounded-md bg-white transition-all duration-300 hover:shadow-sm hover:border-primary flex flex-col items-center justify-center text-center p-0.5"
               >
                 <div className="p-0.5 rounded-sm bg-gray-50 group-hover:bg-primary/10 transition-colors mb-0.5 flex items-center justify-center aspect-square">
                   <tool.icon className="w-5 h-5 text-gray-600 group-hover:text-primary" />
@@ -106,3 +106,4 @@ const tools = [
 ];
 
 export default AppHome;
+
