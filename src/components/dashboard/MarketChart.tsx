@@ -1,6 +1,6 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { TradingViewWidget } from "@/components/TradingViewWidget";
+import TradingViewWidget from "@/components/TradingViewWidget";
 
 export function MarketChart() {
   return (
