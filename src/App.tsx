@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -62,6 +61,7 @@ const App = () => (
             {/* Protected App Routes */}
             <Route path="/app" element={<ProtectedRoute><AppHome /></ProtectedRoute>} />
             <Route path="/app/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/app/investment-club" element={<ProtectedRoute><AppInvestmentClub /></ProtectedRoute>} />
             <Route path="/app/investment-club/:id" element={<ProtectedRoute><AppInvestmentClub /></ProtectedRoute>} />
             
             {/* Demo Routes (Unprotected) */}
