@@ -1,15 +1,15 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Boxes, DollarSign, Vote, Shield, Scale, Newspaper, Bot, BarChart, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainNav from "@/components/MainNav";
+import { LogIn, UserPlus } from "lucide-react";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div>
       <MainNav />
 
       {/* Hero Section */}
@@ -143,6 +143,21 @@ const Index = () => {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Button asChild variant="ghost" className="gap-2">
+          <Link to="/auth">
+            <LogIn className="h-4 w-4" />
+            Login
+          </Link>
+        </Button>
+        <Button asChild className="gap-2 bg-black text-white hover:bg-gray-800">
+          <Link to="/auth">
+            <UserPlus className="h-4 w-4" />
+            Sign Up
+          </Link>
+        </Button>
       </div>
     </div>
   );
